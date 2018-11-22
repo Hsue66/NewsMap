@@ -1,0 +1,60 @@
+html,body{
+  height: 100%;
+}
+
+.page{
+  width: 100%;
+  height: 100%;
+}
+
+.col-grid{
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 6fr 1fr;
+}
+
+.left{
+}
+
+.right{
+}
+
+.center{
+  display: grid;
+  grid-template-rows: 300px 1fr 100px;
+}
+
+.title{
+  text-align: center;
+  font-size: 40px;
+}
+
+.btn{
+}
+
+#cy {
+  width: 100%;
+  height: 100%;
+}
+
+
+.cy-title {
+    text-align: center;
+    font-size: 13px;
+    width: 150px;
+}
+
+.cy-title__name {
+    color: #000;
+    font-size: 0.9em;
+    line-height: 1.2em;
+    margin-bottom: 0;
+    text-transform: capitalize;
+}
+
+.cy-title__info {
+    color: #9c9c9c;
+    font-size: 0.8em;
+    line-height: 0.9em;
+    margin-bottom: 0.3em;
+}

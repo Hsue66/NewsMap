@@ -1,0 +1,33 @@
+<% include partial/header %>
+    <link rel="stylesheet" href="/css/withA.css">
+  </head>
+
+  <body>
+    <div class="page">
+      <div class="left"></div>
+      <div class="center">
+        <div class="title">
+          <h3>news Map + Article</h3>
+          <form action="/" method="get">
+            <input type="text" name="sQuery" placeholder="query">
+            <button>Search</button>
+          </form>
+          <div class="btn">
+            <button type="button" id="expandAll">ExpandAll</button>
+            <button type="button" id="collapseAll">CollapseAll</button>
+          </div>
+        </div>
+
+          <div class="map" id="cy"></div>
+          <div class="article">
+            <p id="title" text=></p>
+            <p id="date" align="right"></p>
+            <p id="contents"></p>
+          </div>
+          <div class="footer"></div>
+      </div>
+      <div class="right"></div>
+    </div>
+    <script src="js/cyto.js"></script>
+
+  <% include partial/footer %>

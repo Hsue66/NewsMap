@@ -1,0 +1,43 @@
+html,body{
+  height: 100%;
+}
+
+.page{
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 6fr 1fr;
+}
+
+.left{
+}
+
+.right{
+}
+
+.center{
+  display: grid;
+  grid-template-rows: 300px 1fr 500px 100px;
+}
+
+.title{
+  text-align: center;
+  font-size: 40px;
+}
+
+.btn{
+}
+
+#cy {
+  border-width: medium;
+  border-style: solid;
+  border-color: #969696;
+  width: 100%;
+  height: 100%;
+}
+
+.article {
+  margin-top: 50px;
+  border-width: medium;
+  border-style: solid;
+  border-color: #969696;
+}
