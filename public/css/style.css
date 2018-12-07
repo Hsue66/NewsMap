@@ -1,0 +1,117 @@
+body{
+  font-family: 'Open Sans';
+}
+
+.navbar{
+  margin-bottom: 0px;
+}
+
+.navbar-header{
+  font-size: 16px;
+  letter-spacing: 5px;
+}
+
+.navbar-nav{
+  font-size: 15px;
+}
+
+.search{
+  background:url('/css/bg.jpg') no-repeat center center;
+  background-size: cover;
+  display: table;
+  height: 150px;
+  width: 100%;
+  margin-top: 0px;
+}
+
+.search_con{
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+}
+
+h1{
+  color:white;
+  font-size: 38px;
+  text-shadow: 2px 2px 5px black;
+}
+
+.btn-search{
+  background-color: #d8b17e;
+  font-size:16px;
+}
+
+.cy_con{
+  height: 500px;
+}
+
+.ec_btn{
+  margin-bottom: 15px;
+  margin-top: 20px;
+}
+
+.cy{
+  background-color: #edeff2;
+  height: 1000px;
+}
+
+h2{
+  color: #333333;
+}
+h4{
+  color: #8e8e9c;
+}
+/*
+blue
+  color: #1f3263;
+beige
+  color: #d8b17e;
+drak gray
+  color: #333333;
+gray
+  color: #737373;
+  */
+
+.title{
+  margin-bottom: 30px;
+  margin-top: 30px;
+}
+
+.article-content{
+  color: #1f3263;
+  font-size: 16px;
+  margin-bottom: 100px;
+  min-height: 50px;
+}
+
+.footer{
+  background-color: #edeff2;
+}
+
+.footer-contents{
+  color: #676770;
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+
+h5 {
+  font-size: 16px;
+}
+
+.copyright{
+  background-color: #333333;
+  display: table;
+  height: 65px;
+  width: 100%;
+}
+
+.copyright-content{
+  color: #8e8e9c;
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.pink{
+  background-color: pink;
+}

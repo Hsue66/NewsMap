@@ -1,0 +1,36 @@
+<% include partial/header2 %>
+
+    <div class="search">
+      <div class="search_con container" >
+          <h1>THIS IS NEWS MAP</h1>
+            <form class="search_form form-inline" action="#" method="get">
+                <input type="text" class="form-control input-lg" name="sQuery" placeholder="Query">
+                <button type="submit" class="btn btn-search input-lg">make a Map for Me!</button>
+            </form>
+        </div>
+        </div>
+      </div>
+
+    <div class="container">
+      <div class="ec_btn pull-right">
+        <button class="btn btn-primary active" type="button" name="button" id="expandAll">Expand All</button>
+        <button class="btn btn-default active" type="button" name="button" id="collapseAll">Collapse All</button>
+      </div>
+    </div>
+
+    <div class="cy" id="cy">
+
+    </div>
+
+
+    <div class="container" >
+      <div class="title text-center">
+        <h2 id="title"></h2>
+        <h4 id="date"></h4>
+      </div>
+      <p class="article-content text-center" id="contents">
+
+      </p>
+    </div>
+    <script src="js/cyto0.js"></script>
+<% include partial/footer2 %>
