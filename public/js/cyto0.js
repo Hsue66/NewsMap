@@ -61,7 +61,9 @@ fetch('/cytoData/'+query+'Data.json',{mode:'no-cors'})
 .then(function(elem){
   var cy = cytoscape({
       container: document.getElementById('cy'),
-      minZoom: 0.7,
+      zoom: 3,
+      pan: { x: 0, y: 0 },
+      minZoom: 0.1,
       maxZoom: 5,
       wheelSensitivity: 0.4,
       style: styles,
