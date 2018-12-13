@@ -1,10 +1,14 @@
 <% include partial/header2 %>
+<link rel="stylesheet" href="/css/search.css">
 
+<% include partial/nav %>
     <div class="search">
       <div class="search_con container" >
           <h1>THIS IS NEWS MAP</h1>
-            <form class="search_form form-inline" action="#" method="get">
-                <input type="text" class="form-control input-lg" name="sQuery" placeholder="Query">
+            <form class="search_form form-inline" action="/search" method="get" name="search">
+                <input type="text" class="form-control input-lg" name="sQuery" placeholder="Enter Keywords" required minlength="1" id="inputQuery"
+                <% if(sQuery)%>
+                value='<%=sQuery%>'>
                 <button type="submit" class="btn btn-search input-lg">make a Map for Me!</button>
             </form>
         </div>
@@ -17,11 +21,11 @@
         <button class="btn btn-default active" type="button" name="button" id="collapseAll">Collapse All</button>
       </div>
     </div>
+    <div class="container">
+      <div class="cy" id="cy">
 
-    <div class="cy" id="cy">
-
+      </div>
     </div>
-
 
     <div class="container" >
       <div class="title text-center">

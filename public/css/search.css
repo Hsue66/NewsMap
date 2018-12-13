@@ -1,20 +1,3 @@
-body{
-  font-family: 'Open Sans';
-}
-
-.navbar{
-  margin-bottom: 0px;
-}
-
-.navbar-header{
-  font-size: 16px;
-  letter-spacing: 5px;
-}
-
-.navbar-nav{
-  font-size: 15px;
-}
-
 .search{
   background:url('/css/bg.jpg') no-repeat center center;
   background-size: cover;
@@ -52,7 +35,7 @@ h1{
 
 .cy{
   background-color: #edeff2;
-  height: 600px;
+  height: 500px;
 }
 
 h2{
@@ -81,37 +64,5 @@ gray
   color: #1f3263;
   font-size: 16px;
   margin-bottom: 100px;
-  min-height: 50px;
-}
-
-.footer{
-  background-color: #edeff2;
-}
-
-.footer-contents{
-  color: #676770;
-  padding-bottom: 20px;
-  padding-top: 20px;
-}
-
-h5 {
-  font-size: 16px;
-}
-
-.copyright{
-  background-color: #333333;
-  display: table;
-  height: 65px;
-  width: 100%;
-}
-
-.copyright-content{
-  color: #8e8e9c;
-  display: table-cell;
-  text-align: center;
-  vertical-align: middle;
-}
-
-.pink{
-  background-color: pink;
+  min-height: 350px;
 }

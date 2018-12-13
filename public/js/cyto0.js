@@ -50,9 +50,8 @@ var styles = [
   }
 ];
 
-//var query = window.location.search.split('=')[1];
-//var query = document.getElementById('inputQuery').value;
-var query = 'new'
+var query = document.getElementById('inputQuery').value;
+
 console.log('/cytoData/'+query+'Data.json');
 fetch('/cytoData/'+query+'Data.json',{mode:'no-cors'})
 .then(function(res){
@@ -183,7 +182,7 @@ fetch('/cytoData/'+query+'Data.json',{mode:'no-cors'})
   cy.on("click","node", function(event){
     var node = event.target;
     document.getElementById("title").innerHTML = node.data("name");
-    document.getElementById("date").innerHTML = node.data("date");
+    document.getElementById("date").innerHTML = (node.data("date")).replace('T',' ');
     document.getElementById("contents").innerHTML = node.data("contents");
   });
 
