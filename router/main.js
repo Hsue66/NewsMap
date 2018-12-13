@@ -1,4 +1,4 @@
-module.exports = function(app,Books){
+module.exports = function(app,News){
 
   app.get("/",function(req,res){
     res.render("main");
@@ -19,12 +19,10 @@ module.exports = function(app,Books){
     res.render("demo");
   });
 
-  // GET ALL BOOKS
-  app.get('/books', function(req,res){
-    Books.find(function(err, books){
+  app.get('/news', function(req,res){
+    News.find({id:"088-0000516274"}, function(err, news){
       if(err) return res.status(500).send({error: 'database failure'});
-      res.json(books);
+      res.json(news);
     });
   });
-
 };

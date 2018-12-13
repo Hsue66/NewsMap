@@ -2,12 +2,13 @@ var express = require("express"),
     app = express();
 var mongoose = require('mongoose');
 
-var Books = require('./models/books');
-var router = require("./router/main")(app,Books);
+var News = require('./models/news');
+var router = require("./router/main")(app,News);
 
 const PORT = process.env.PORT || 3000;
 
 mongoose.connect(process.env.MONGODB_URI);
+//mongoose.connect("mongodb://localhost/nc-news", { useNewUrlParser: true });
 
 app.use(express.static("public"));
 
