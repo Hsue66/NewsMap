@@ -1,0 +1,109 @@
+.m_search{
+  background:url('/css/bg.jpg') no-repeat center center;
+  background-size: cover;
+  display: table;
+  height: 600px;
+  width: 100%;
+}
+
+.m_search_con{
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+}
+
+
+.btn-search{
+  background-color: #d8b17e;
+  font-size:16px;
+}
+
+h1{
+  color:white;
+  font-size: 60px;
+  letter-spacing: 8px;
+  text-shadow: 2px 2px 5px black;
+}
+
+.m_subheading{
+  color:white;
+  font-size: 25px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.m_intro{
+  /* background-color: #edeff2; */
+  min-height: 620px;
+  margin-top: 80px;
+}
+
+.intro_header{
+  color: #333333;
+  font-size: 25px;
+  letter-spacing: 5px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.intro_con{
+  margin-top: 50px;
+}
+
+.intro_box{
+  text-align: center;
+  border: 2px solid #cbd9ed;
+  border-radius: 10px;
+  padding-bottom: 30px;
+  padding-top: 30px;
+  min-height: 400px;
+}
+
+.icon {
+  display: inline-block;
+  width: 5em;
+  height: 5em;
+  background-color: #1f3263;
+  text-align: center;
+  border-radius:2.5em;
+}
+
+.icon:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -0.25em;
+}
+
+.icon span {
+  color: white;
+  font-size: 2em;
+  margin: auto;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.icon i {
+  color: white;
+  font-size: 2em;
+  margin: auto;
+  text-align: center;
+  vertical-align: middle;
+}
+
+
+.intro_title{
+  font-size: 20px;
+  letter-spacing: 5px;
+  margin-bottom: 10px;
+  margin-top: 15px;
+  text-transform: uppercase;
+}
+
+.intro_detail{
+  font-size: 15px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
