@@ -1,4 +1,4 @@
-module.exports = function(app){
+module.exports = function(app,Books){
 
   app.get("/",function(req,res){
     res.render("main");
@@ -17,6 +17,14 @@ module.exports = function(app){
 
   app.get("/demo",function(req,res){
     res.render("demo");
+  });
+
+  // GET ALL BOOKS
+  app.get('/books', function(req,res){
+    Books.find(function(err, books){
+      if(err) return res.status(500).send({error: 'database failure'});
+      res.json(books);
+    });
   });
 
 };

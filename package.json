@@ -4,7 +4,7 @@
   "description": "demo server for cytoscape map",
   "main": "app.js",
   "scripts": {
-    "start" : "node app.js",
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Hsue66",
@@ -15,6 +15,7 @@
     "cytoscape-node-html-label": "^1.1.2",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
-    "jquery": "^3.3.1"
+    "jquery": "^3.3.1",
+    "mongoose": "^5.3.16"
   }
 }

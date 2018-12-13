@@ -1,9 +1,13 @@
-var express = require("express");
-var app = express();
+var express = require("express"),
+    app = express();
+var mongoose = require('mongoose');
 
-var router = require("./router/main")(app);
+var Books = require('./models/books');
+var router = require("./router/main")(app,Books);
 
 const PORT = process.env.PORT || 3000;
+
+mongoose.connect(process.env.MONGODB_URI);
 
 app.use(express.static("public"));
 
