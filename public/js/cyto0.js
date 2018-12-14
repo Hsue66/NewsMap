@@ -4,6 +4,10 @@ var styles = [
     "style": {
       "height": 20,
       "width": 20,
+      'content': 'data(name)',
+      'text-opacity': 0,
+      'text-wrap': 'ellipsis',
+      'text-max-width': '150px',
       "background-color": "#969696"
     }
   },
@@ -17,7 +21,7 @@ var styles = [
   {
       "selector": "node.cy-expand-collapse-collapsed-node",
       "style": {
-          "background-color": "#b00004",
+          "background-color": "#1f3263",
           "shape": "rectangle"
       }
   },
@@ -60,9 +64,9 @@ fetch('/cytoData/'+query+'Data.json',{mode:'no-cors'})
 .then(function(elem){
   var cy = cytoscape({
       container: document.getElementById('cy'),
-      zoom: 3,
       pan: { x: 0, y: 0 },
-      minZoom: 0.1,
+      zoom: 1,
+      minZoom: 0.7,
       maxZoom: 5,
       wheelSensitivity: 0.4,
       style: styles,
