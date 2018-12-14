@@ -1,0 +1,19 @@
+[
+  {"data": {"id": "a", "name": "a", "parent": "A", "topic": [""], "date": "", "contents": "contents", "erasable":false}, "group": "nodes", "position": {"x": 101, "y": 106}},
+
+  {"data": {"id": "b", "name": "b", "parent": "B", "topic": [""], "date": "", "contents": "contents", "erasable":false}, "group": "nodes", "position": {"x": 201, "y": 106}},
+
+  {"data": {"id": "d", "name": "d", "parent": "B", "topic": [""], "date": "", "contents": "contents", "erasable":false}, "group": "nodes", "position": {"x": 151, "y": 106}},
+
+  {"data": {"id": "B", "name": "B", "parent": "A", "topic": [""], "date": "", "contents": "contents", "erasable":true}, "group": "nodes", "position": {"x": 151, "y": 106}},
+
+  {"data": {"id": "A", "name": "A", "topic": [""], "date": "", "contents": "contents", "erasable":true}, "group": "nodes", "position": {"x": 101, "y": 106}},
+
+  {"data": {"id": "c", "name": "c", "topic": [""], "date": "", "contents": "contents", "erasable":false}, "group": "nodes", "position": {"x": 301, "y": 106}},
+
+  {"data": {"source": "a", "target": "d", "topic": [""]}, "group": "edges"},
+
+  {"data": {"source": "d", "target": "b", "topic": [""]}, "group": "edges"},
+
+  {"data": {"source": "b", "target": "c", "topic": [""]}, "group": "edges"}
+]

@@ -86,9 +86,6 @@ fetch('/cytoData/'+query+'Data.json',{mode:'no-cors'})
       }
   });
 
-  // hidden될 label을 가지는 ID array
-  var hiddenStat = [];
-
   // label html style로 만들기
   cy.nodeHtmlLabel([
       {
@@ -99,7 +96,7 @@ fetch('/cytoData/'+query+'Data.json',{mode:'no-cors'})
           tpl: function (data) {
               var p1 = '<p class="cy-title__name"';
               var p2 = '<p  class="cy-title__info"';
-              if(hiddenStat.includes(data.id)){
+              if(!api.isExpandable(cy.getElementById(data.id)) && data.erasable){
                 p1 += 'hidden';
                 p2 += 'hidden';
               }
@@ -150,22 +147,6 @@ fetch('/cytoData/'+query+'Data.json',{mode:'no-cors'})
     });
   }
 
-  // expand 후, parent label없애기
-  cy.nodes().on("expandcollapse.afterexpand", function(event){
-    var node = this;
-    hiddenStat.push(node.id());
-    console.log(hiddenStat);
-  });
-
-  // collapse 후, 지웠던 라벨 보이게
-  cy.nodes().on("expandcollapse.aftercollapse", function(event){
-    var node = this;
-    console.log(hiddenStat);
-    var idx = hiddenStat.indexOf(node.id());
-    hiddenStat.splice(idx, 1);
-    console.log(hiddenStat);
-  });
-
   // mouse over시,  edge 색상변경
   cy.on('mouseover','node',function(event){
     var node = event.target;
@@ -178,6 +159,7 @@ fetch('/cytoData/'+query+'Data.json',{mode:'no-cors'})
     removehighlightEdge(event.cy);
   });
 
+  var clickBefore;
   // click시, article update
   cy.on("click","node", function(event){
     var node = event.target;
