@@ -22,7 +22,7 @@ var styles = [
       "selector": "node.cy-expand-collapse-collapsed-node",
       "style": {
           "background-color": "#1f3263",
-          "shape": "octagon"
+          "shape": "pentagon"
       }
   },
 
