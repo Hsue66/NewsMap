@@ -10,16 +10,23 @@ new WOW().init();
 <% include partial/nav %>
 
   <div class="m_search">
-    <div class="m_search_con container wow bounceIn" >
-      <h1>THIS IS NEWS MAP</h1>
-      <div class="m_subheading">
-        News map application
+      <div class="m_search_con wow bounceIn" >
+        <h1>THIS IS NEWS MAP</h1>
+        <div class="m_subheading">
+          News map application
+        </div>
+        <div class="row with-margin">
+          <div class="col-md-2"></div>
+          <div class="col-md-8">
+            <form class="input-group input-group-lg" action="/search" method="get">
+              <input type="text" class="form-control input-lg" name="sQuery" placeholder="Enter Keywords">
+              <span class="input-group-btn">
+                <button class="btn btn-search btn-lg" type="submit">make a News Map for Me!</button>
+              </span>
+          </div>
+          <div class="col-md-2"></div>
+        </div>
       </div>
-        <form class="search_form form-inline" action="/search" method="get">
-            <input type="text" class="form-control input-lg" name="sQuery" placeholder="Enter Keywords">
-            <button type="submit" class="btn btn-search input-lg">make a Map for Me!</button>
-        </form>
-    </div>
   </div>
 
 

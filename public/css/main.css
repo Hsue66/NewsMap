@@ -4,6 +4,8 @@
   display: table;
   height: 600px;
   width: 100%;
+  padding-left: 10%;
+  padding-right: 10%;
 }
 
 .m_search_con{
@@ -12,9 +14,9 @@
   vertical-align: middle;
 }
 
-
 .btn-search{
   background-color: #d8b17e;
+  color: white;
   font-size:16px;
 }
 

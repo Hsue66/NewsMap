@@ -5,12 +5,20 @@
     <div class="search">
       <div class="search_con container" >
           <h1>THIS IS NEWS MAP</h1>
-            <form class="search_form form-inline" action="/search" method="get" name="search">
-                <input type="text" class="form-control input-lg" name="sQuery" placeholder="Enter Keywords" required minlength="1" id="inputQuery"
-                <% if(sQuery)%>
-                value='<%=sQuery%>'>
-                <button type="submit" class="btn btn-search input-lg">make a Map for Me!</button>
-            </form>
+          
+            <div class="row with-margin">
+              <div class="col-md-2"></div>
+              <div class="col-md-8">
+                <form class="input-group input-group-lg" action="/search" method="get" name="search">
+                  <input type="text" class="form-control input-lg" name="sQuery" placeholder="Enter Keywords"required minlength="1" id="inputQuery"
+                  <% if(sQuery)%>
+                  value='<%=sQuery%>'>
+                  <span class="input-group-btn">
+                    <button class="btn btn-search btn-lg" type="submit">make a News Map for Me!</button>
+                  </span>
+              </div>
+              <div class="col-md-2"></div>
+            </div>
         </div>
         </div>
       </div>
