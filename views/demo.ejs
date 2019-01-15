@@ -1,33 +1,46 @@
-<% include partial/header %>
-    <link rel="stylesheet" href="/css/withA.css">
-  </head>
+<% include partial/header2 %>
+<link rel="stylesheet" href="/css/demo.css">
 
-  <body>
-    <div class="page">
-      <div class="left"></div>
-      <div class="center">
-        <div class="title">
-          <h3>news Map + Article</h3>
-          <form action="/" method="get">
-            <input type="text" name="sQuery" placeholder="query">
-            <button>Search</button>
-          </form>
-          <div class="btn">
-            <button type="button" id="expandAll">ExpandAll</button>
-            <button type="button" id="collapseAll">CollapseAll</button>
-          </div>
+<% include partial/nav %>
+    <div class="search">
+      <div class="search_con container" >
+          <h1>THIS IS NEWS MAP</h1>
+
+            <div class="row with-margin">
+              <div class="col-md-2"></div>
+              <div class="col-md-8">
+                <form class="input-group input-group-lg" action="/search" method="get" name="search">
+                  <input type="text" class="form-control input-lg" name="sQuery" placeholder="Enter Keywords"required minlength="1" id="inputQuery"
+                  <% if(sQuery)%>
+                  value='<%=sQuery%>'>
+                  <span class="input-group-btn">
+                    <button class="btn btn-search btn-lg" type="submit">make a News Map for Me!</button>
+                  </span>
+              </div>
+              <div class="col-md-2"></div>
+            </div>
         </div>
-
-          <div class="map" id="cy"></div>
-          <div class="article">
-            <p id="title" text=></p>
-            <p id="date" align="right"></p>
-            <p id="contents"></p>
-          </div>
-          <div class="footer"></div>
+        </div>
       </div>
-      <div class="right"></div>
-    </div>
-    <script src="js/cyto.js"></script>
 
-  <% include partial/footer %>
+    <div class="container">
+      <div class="ec_btn pull-right">
+        <button class="btn btn-primary active " type="button" name="button" id="expandAll">Expand All</button>
+        <button class="btn btn-default active" type="button" name="button" id="collapseAll">Collapse All</button>
+      </div>
+    </div>
+      <div class="cy" id="cy">
+
+      </div>
+
+    <div class="container" >
+      <div class="title text-center">
+        <h2 id="title"></h2>
+        <h4 id="date"></h4>
+      </div>
+      <p class="article-content text-center" id="contents">
+        키워드를 검색하신 후, 뉴스를 클릭하시면 기사를 살펴볼 수 있습니다
+      </p>
+    </div>
+    <script src="js/cytod.js"></script>
+<% include partial/footer2 %>

@@ -44,7 +44,7 @@ module.exports = function(app,News){
   });
 
   app.get("/demo",function(req,res){
-    res.render("demo");
+    res.render("demo",{sQuery : 'vis'});
   });
 
   app.get('/news', function(req,res){
