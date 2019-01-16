@@ -114,22 +114,53 @@ module.exports = function(app,News){
   });
 
   app.post("/sendQ3",function(req,res){
-  var sess = req.session;
+    var sess = req.session;
 
-  if(sess.nowflag)
-    sess.Qd2[2] = req.body.topics;
-  else
-    sess.Qd1[2] = req.body.topics;
+    if(sess.nowflag)
+      sess.Qd2[2] = req.body.topics;
+    else
+      sess.Qd1[2] = req.body.topics;
 
-  console.log("Q3")
-  console.log(req.body.topics)
-  console.log("------------------")
-  console.log(sess.Qd1)
-  console.log(sess.Qd2)
+    console.log("Q3")
+    console.log(req.body.topics)
+    console.log("------------------")
+    console.log(sess.Qd1)
+    console.log(sess.Qd2)
 
-  res.send("ho")
-  //res.redirect("/conMap/"+req.body.idx);
-});
+    res.redirect("/userstudy/conMap");
+  });
+
+  app.get("/userstudy/conMap/",function(req,res){
+    var sess = req.session;
+    res.render("userstudy/conMap",{idx:sess.nowflag,dataset:sess.dataset[sess.nowflag]});
+  });
+
+  app.post("/sendQ4",function(req,res){
+    var sess = req.session;
+
+
+        console.log("Q4")
+        console.log(req.body.Con_articles)
+        console.log("------------------")
+
+    if(sess.nowflag){
+      sess.Qd2[3] = req.body.Con_articles;
+      console.log(sess.Qd1)
+      console.log(sess.Qd2)
+      res.redirect("/userstudy/finish")
+    }
+    else{
+      sess.Qd1[3] = req.body.Con_articles;
+      console.log(sess.Qd1)
+      console.log(sess.Qd2)
+      sess.nowflag = sess.nowflag+1;
+      res.redirect("/userstudy/eachMap")
+    }
+  });
+
+  app.get("/userstudy/finish",function(req,res){
+    res.render("userstudy/finish");
+  });
 
   var userjsonDir = __dirname + "/../userData/user.json";
 

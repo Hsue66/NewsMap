@@ -1,0 +1,44 @@
+<% include ../partial/header %>
+<link rel="stylesheet" href="/ucss/common.css">
+<style type="text/css">
+      .answers{
+          height: 100px;
+          overflow-y: scroll;
+        }
+</style>
+<% include ../partial/nav %>
+
+<div class="container">
+  <div class="jumbotron question">
+    <h1>Question)</h1>
+    <h2>연결지점이 올바르지않은</h2>
+    <p>노란색 노드를 우클릭하면 선택됩니다.</p>
+    <form action="/sendQ4" method="post">
+
+      <div class="answers" id ="conn">
+
+      </div>
+      <input type="hidden" name="Con_articles" id="Con_articles">
+      <button class="btn">Next</button>
+    </form>
+  </div>
+
+    <div class="container">
+      <div class="cy" id="cy" value="<%=dataset%>">
+
+      </div>
+    </div>
+
+    <div class="container" >
+      <div class="title text-center">
+        <h2 id="title"></h2>
+        <h4 id="date"></h4>
+      </div>
+      <p class="article-content text-center" id="contents">
+        키워드를 검색하신 후, 뉴스를 클릭하시면 기사를 살펴볼 수 있습니다
+      </p>
+    </div>
+</div>
+
+<script src="/ujs/conncyto.js"></script>
+<% include ../partial/footer %>
