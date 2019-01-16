@@ -70,8 +70,19 @@ module.exports = function(app,News){
     else
       sess.Qd12 = sess.dataset[1];
 
-    res.send(sess.Qd12)
-    //res.redirect("eachMap");
+    res.redirect("/userstudy/eachMap");
+  });
+
+  app.get('/userstudy/eachMap',function(req,res){
+    var sess = req.session;
+    res.render("userstudy/eachMap",{now:sess.nowflag});
+  });
+
+  app.get("/userstudy/cohMap/:idx",function(req,res){
+    console.log(req.params.idx)
+    res.send(req.params.idx)
+    //var sess = req.session;
+    //res.render("userstudy/cohMap",{idx:req.params.idx,dataset:sess.dataset[req.params.idx],redflag:0});
   });
 
 

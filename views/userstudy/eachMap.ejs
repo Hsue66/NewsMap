@@ -1,21 +1,14 @@
-<% include partials/header0 %>
-<% include partials/nav %>
+<% include ../partial/header %>
+<% include ../partial/nav %>
 
 <div class="container">
-  <div class="question">
-    <h1>QUESTION 2-8)</h1>
-    <h2>각 맵에 대해 상세 평가</h2>
+  <div class="jumbotron">
+    <h1>QUESTION 2.1 ~ 2.4)</h1>
+    <h2>각 맵에 대해 상세 평가 </h2>
+    <p>Map<%=String.fromCharCode('A'.charCodeAt(0)+now)%>에 대해 평가합니다.</p>
+    <p><a class="btn btn-primary btn-lg" href="/userstudy/cohMap/<%=now%>" role="button"> Next</a></p>
   </div>
-  <%
-    var mapa = '/cohMap/'+dataset[0]
-    var mapb = '/cohMap/'+dataset[1]
-    var locA = "location.href='"+mapa+"'";
-    var locB = "location.href='"+mapb+"'";
-    //console.log(locA)
-  %>
-  <button type="button" class="btn btn-primary btn-lg active" onclick="location.href='/cohMap/0'">Map A</button>
-  <button type="button" class="btn btn-default btn-lg active" onclick="location.href='/cohMap/1'">Map B</button>
 
 </div>
 
-<% include partials/footer0 %>
+<% include ../partial/footer %>
