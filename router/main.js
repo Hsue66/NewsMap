@@ -80,11 +80,30 @@ module.exports = function(app,News){
 
   app.get("/userstudy/cohMap/:idx",function(req,res){
     console.log(req.params.idx)
-    res.send(req.params.idx)
-    //var sess = req.session;
-    //res.render("userstudy/cohMap",{idx:req.params.idx,dataset:sess.dataset[req.params.idx],redflag:0});
+    var sess = req.session;
+    res.render("userstudy/cohMap",{idx:req.params.idx,dataset:sess.dataset[req.params.idx],redflag:0});
   });
 
+  app.post("/sendQ2",function(req,res){
+      var sess = req.session;
+
+      if(parseInt(req.body.idx))
+        sess.Qd2[parseInt(req.body.redflag)] = req.body.articles;
+      else
+        sess.Qd1[parseInt(req.body.redflag)] = req.body.articles;
+
+      console.log("next")
+      console.log(req.body.articles)
+      console.log("------------------")
+      console.log(sess.Qd1)
+      console.log(sess.Qd2)
+
+      res.send(req.body.redflag)
+      // if(parseInt(req.body.redflag))
+      //   res.redirect("/redTLMap/"+req.body.idx);
+      // else
+      //   res.redirect("/redMap/"+req.body.idx);
+    });
 
   var userjsonDir = __dirname + "/../userData/user.json";
 

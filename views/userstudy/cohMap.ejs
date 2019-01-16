@@ -1,0 +1,51 @@
+<% include ../partial/header %>
+<link rel="stylesheet" href="/ucss/common.css">
+<style type="text/css">
+      .answers{
+          height: 100px;
+          overflow-y: scroll;
+        }
+</style>
+<% include ../partial/nav %>
+
+<div class="container">
+  <div class="jumbotron question">
+    <h1>Question)</h1>
+    <%
+      var q = '흐름에 올바르지 않은 기사는?'
+      if(redflag)
+        q =  '중복되는 기사는?';
+    %>
+    <h2><%=q%></h2>
+    <p>노드를 우클릭하면 선택됩니다.</p>
+    <form action="/sendQ2" method="post">
+
+      <div class="answers" id ="incoh">
+
+      </div>
+      <input type="hidden" name="articles" id="articles">
+      <input type="hidden" name="idx" value="<%=idx%>">
+      <input type="hidden" name="redflag" value="<%=redflag%>">
+      <button class="btn">Next</button>
+    </form>
+  </div>
+
+    <div class="container">
+      <div class="cy" id="cy" value="<%=dataset%>">
+
+      </div>
+    </div>
+
+    <div class="container" >
+      <div class="title text-center">
+        <h2 id="title"></h2>
+        <h4 id="date"></h4>
+      </div>
+      <p class="article-content text-center" id="contents">
+        키워드를 검색하신 후, 뉴스를 클릭하시면 기사를 살펴볼 수 있습니다
+      </p>
+    </div>
+</div>
+
+<script src="/ujs/cohcyto.js"></script>
+<% include ../partial/footer %>
