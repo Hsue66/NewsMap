@@ -1,0 +1,47 @@
+<% include ../partial/header %>
+<link rel="stylesheet" href="/ucss/common.css">
+<% include ../partial/nav %>
+
+<div class="container">
+  <div class="jumbotron question">
+    <h1>QUESTION1)</h1>
+    <h2>주제 '<%=topic%>'에 대해 A와 B중 어떤것이?</h2>
+    <p>라디오 버튼을 클릭하세요</p>
+    <div class="answers">
+      <form action="/sendQ1" method="post">
+        <input type="radio" name="Map" value="MapA">
+        <label for="MapA">Map A</label>
+        <input type="radio" name="Map" value="MapB">
+        <label for="MapB">Map B</label>
+        <button class="btn">Next</button>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <% for(var i=0; i<dataset.length; i++){ %>
+    <div class="col-sm-6" id="datadiv<%=i%>" value="<%=dataset[i]%>">
+      <div class="row" >
+        <div class="col-lg-12 ">
+          Map<%=String.fromCharCode('A'.charCodeAt(0)+i)%>
+        </div>
+        <div class="col-lg-12 cy" id="cy<%=i%>">
+
+        </div>
+        <div class="col-lg-12">
+          <h2 id="title<%=i%>"></h2>
+          <h4 id="date<%=i%>"></h4>
+          <p class="text-center" id="contents<%=i%>">
+            키워드를 검색하신 후, 뉴스를 클릭하시면 기사를 살펴볼 수 있습니다
+          </p>
+        </div>
+      </div>
+    </div>
+    <%}
+    %>
+  </div>
+
+</div>
+
+<script src="/ujs/cyto0.js"></script>
+<script src="/ujs/cyto1.js"></script>
+<% include ../partial/footer %>

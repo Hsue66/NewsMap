@@ -58,7 +58,54 @@ module.exports = function(app,News){
     res.render('userstudy/login');
   });
 
-  app.get("/userstudy/hello",function(req,res){
-    res.send("hello")
+  app.get("/userstudy/bestMap",function(req,res){
+    var sess = req.session;
+    res.render("userstudy/bestMap",{topic:sess.topic, dataset:sess.dataset});
   });
+
+  app.post("/sendQ1",function(req,res){
+    var sess = req.session;
+    if(req.body.Map === 'MapA')
+      sess.Qd12 = sess.dataset[0];
+    else
+      sess.Qd12 = sess.dataset[1];
+
+    res.send(sess.Qd12)
+    //res.redirect("eachMap");
+  });
+
+
+  var userjsonDir = __dirname + "/../userData/user.json";
+
+  app.post("/login",function(req,res){
+    var username = req.body.id;
+    var sess;
+    sess = req.session;
+
+    fs.readFile(userjsonDir, "utf8", function(err, data){
+        var users = JSON.parse(data);
+        //var username = req.params.username;
+        //var password = req.params.password;
+        var result = {};
+        if(!users[username]){
+            // USERNAME NOT FOUND
+            result["success"] = 0;
+            result["error"] = "not found";
+            res.json(result);
+            return;
+        }
+        result["success"] = 1;
+        sess.username = username;
+        sess.name = users[username]["name"];
+        sess.dataset = users[username]["dataset"];
+        sess.topic = users[username]["topic"];
+        sess.Qd12 = "";
+        sess.Qd1 = users[username]["Qd1"];
+        sess.Qd2 = users[username]["Qd2"];
+        sess.nowflag = 0;
+        //res.json(result);
+        res.redirect("/userstudy/bestMap")
+    });
+  });
+
 };

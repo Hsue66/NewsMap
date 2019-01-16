@@ -2,6 +2,7 @@
 	"hsue": {
 		"password": "1",
 		"name": "hsue",
+		"topic": "greece debt",
     "dataset":["greece.json","greece2.json"],
     "Qd1":["","",""],
     "Qd2":["","",""]
