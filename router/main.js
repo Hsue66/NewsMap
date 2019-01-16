@@ -78,32 +78,58 @@ module.exports = function(app,News){
     res.render("userstudy/eachMap",{now:sess.nowflag});
   });
 
-  app.get("/userstudy/cohMap/:idx",function(req,res){
-    console.log(req.params.idx)
+  app.get("/userstudy/cohMap",function(req,res){
     var sess = req.session;
-    res.render("userstudy/cohMap",{idx:req.params.idx,dataset:sess.dataset[req.params.idx],redflag:0});
+    res.render("userstudy/cohMap",{idx:sess.nowflag,dataset:sess.dataset[sess.nowflag],redflag:0});
   });
 
   app.post("/sendQ2",function(req,res){
-      var sess = req.session;
+    var sess = req.session;
 
-      if(parseInt(req.body.idx))
-        sess.Qd2[parseInt(req.body.redflag)] = req.body.articles;
-      else
-        sess.Qd1[parseInt(req.body.redflag)] = req.body.articles;
+    if(sess.nowflag)
+      sess.Qd2[parseInt(req.body.redflag)] = req.body.articles;
+    else
+      sess.Qd1[parseInt(req.body.redflag)] = req.body.articles;
 
-      console.log("next")
-      console.log(req.body.articles)
-      console.log("------------------")
-      console.log(sess.Qd1)
-      console.log(sess.Qd2)
+    console.log("next")
+    console.log(req.body.articles)
+    console.log("------------------")
+    console.log(sess.Qd1)
+    console.log(sess.Qd2)
 
-      res.send(req.body.redflag)
-      // if(parseInt(req.body.redflag))
-      //   res.redirect("/redTLMap/"+req.body.idx);
-      // else
-      //   res.redirect("/redMap/"+req.body.idx);
-    });
+    if(parseInt(req.body.redflag))
+      res.redirect("/userstudy/redTLMap");
+    else
+      res.redirect("/userstudy/redMap");
+  });
+
+  app.get("/userstudy/redMap",function(req,res){
+    var sess = req.session;
+    res.render("userstudy/cohMap",{idx:sess.nowflag,dataset:sess.dataset[sess.nowflag],redflag:1});
+  });
+
+  app.get("/userstudy/redTLMap",function(req,res){
+    var sess = req.session;
+    res.render("userstudy/redTLMap",{idx:sess.nowflag,dataset:sess.dataset[sess.nowflag]});
+  });
+
+  app.post("/sendQ3",function(req,res){
+  var sess = req.session;
+
+  if(sess.nowflag)
+    sess.Qd2[2] = req.body.topics;
+  else
+    sess.Qd1[2] = req.body.topics;
+
+  console.log("Q3")
+  console.log(req.body.topics)
+  console.log("------------------")
+  console.log(sess.Qd1)
+  console.log(sess.Qd2)
+
+  res.send("ho")
+  //res.redirect("/conMap/"+req.body.idx);
+});
 
   var userjsonDir = __dirname + "/../userData/user.json";
 

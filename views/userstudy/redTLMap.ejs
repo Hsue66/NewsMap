@@ -11,25 +11,18 @@
 <div class="container">
   <div class="jumbotron question">
     <h1>Question)</h1>
-    <%
-      var q = '흐름에 올바르지 않은 기사는?'
-      if(redflag)
-        q =  '중복되는 기사는?';
-    %>
-    <h2><%=q%></h2>
-    <p>노드를 우클릭하면 선택됩니다.</p>
-    <form action="/sendQ2" method="post">
-
-      <div class="answers" id ="incoh">
+    <h2>타임라인 고르세요</h2>
+    <p>엣지를 우클릭하면 선택됩니다.</p>
+    <form action="/sendQ3" method="post">
+      <div class="answers" id="redtl">
 
       </div>
-      <input type="hidden" name="articles" id="articles">
-      <input type="hidden" name="redflag" value="<%=redflag%>">
+      <input type="hidden" name="topics" id="topics">
       <button class="btn">Next</button>
     </form>
   </div>
 
-    <div class="container">
+  <div class="container">
       <div class="cy" id="cy" value="<%=dataset%>">
 
       </div>
@@ -46,5 +39,5 @@
     </div>
 </div>
 
-<script src="/ujs/cohcyto.js"></script>
+<script src="/ujs/redcyto.js"></script>
 <% include ../partial/footer %>
