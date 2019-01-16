@@ -8,8 +8,8 @@ var News = require('./models/news');
 
 const PORT = process.env.PORT || 3000;
 
-//mongoose.connect(process.env.MONGODB_URI);
-mongoose.connect("mongodb://localhost/nc-news", { useNewUrlParser: true });
+mongoose.connect(process.env.MONGODB_URI);
+//mongoose.connect("mongodb://localhost/nc-news", { useNewUrlParser: true });
 
 app.use(bodyParser.urlencoded({extended: true}));
 
