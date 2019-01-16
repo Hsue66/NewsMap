@@ -1,0 +1,38 @@
+<% include ../partial/header %>
+<style type="text/css">
+.login_form{
+  padding-top: 100px;
+  padding-bottom: 500px;
+}
+</style>
+<% include ../partial/nav %>
+
+<div class="container">
+  <div class="jumbotron">
+    <h1>User Study</h1>
+    <p>News Map과 상대 method인 Trains of Thoughts의 Map을 비교하기 위한 User Study입니다.
+    제공된 id로 로그인하시면 평가를 시작하실 수 있습니다.</p>
+  </div>
+  <div class="login_form">
+    <div class="col-sm-4">
+
+    </div>
+    <div class="col-sm-4">
+      <form action="/login" method="post">
+        <div class="form-group">
+          <label for="id"> ID를 입력하세요 </label>
+          <input class="form-control" type="text" placeholder="id" name="id">
+        </div>
+        <div class="form-group">
+          <button class="btn btn-lg btn-primary btn-block">Login</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="col-sm-4">
+
+    </div>
+  </div>
+
+</div>
+<% include ../partial/footer %>

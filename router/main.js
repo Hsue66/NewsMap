@@ -53,4 +53,12 @@ module.exports = function(app,News){
       res.json(news);
     });
   });
+
+  app.get("/userstudy",function(req,res){
+    res.render('userstudy/login');
+  });
+
+  app.get("/userstudy/hello",function(req,res){
+    res.send("hello")
+  });
 };
