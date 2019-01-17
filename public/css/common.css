@@ -1,6 +1,13 @@
-body{
+html {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  height: 100%;
   font-family: 'Open Sans';
 }
+
 
 .navbar{
   margin-bottom: 0px;
@@ -15,9 +22,19 @@ body{
   font-size: 15px;
 }
 
+.body_contents{
+  /* background-color: yellow; */
+  min-height: 100%;
+  position: relative;
+  padding-bottom: 500px;
+}
 
 .footer{
   background-color: #edeff2;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .footer-contents{
