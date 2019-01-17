@@ -1,6 +1,7 @@
 var fs = require("fs");
+var ObjectID = require('mongodb').ObjectID;
 
-module.exports = function(app,News){
+module.exports = function(app,News,Users){
 
   app.get("/",function(req,res){
     res.render("main");
@@ -147,6 +148,7 @@ module.exports = function(app,News){
       sess.Qd2[3] = req.body.Con_articles;
       console.log(sess.Qd1)
       console.log(sess.Qd2)
+      sess.nowflag = sess.nowflag+1;
       res.redirect("/userstudy/finish")
     }
     else{
@@ -159,40 +161,52 @@ module.exports = function(app,News){
   });
 
   app.get("/userstudy/finish",function(req,res){
+    var sess = req.session;
+    console.log(sess);
+    if(sess.nowflag === 2){
+      console.log("save "+sess.userid);
+      var updateV = {
+        "bestMap": sess.Qd12,
+        "eachMap": {
+                    "dataset1":sess.Qd1,
+                    "dataset2":sess.Qd2
+                  }
+      }
+      Users.updateOne({'_id':ObjectID(sess.userid)},{$set:updateV},function(err,res){
+        if(err)
+          console.log(err);
+        else {
+          console.log("saved");
+        }
+      });
+    }
+
     res.render("userstudy/finish");
   });
 
-  var userjsonDir = __dirname + "/../userData/user.json";
-
   app.post("/login",function(req,res){
     var username = req.body.id;
-    var sess;
-    sess = req.session;
+    var sess = req.session;
 
-    fs.readFile(userjsonDir, "utf8", function(err, data){
-        var users = JSON.parse(data);
-        //var username = req.params.username;
-        //var password = req.params.password;
-        var result = {};
-        if(!users[username]){
-            // USERNAME NOT FOUND
-            result["success"] = 0;
-            result["error"] = "not found";
-            res.json(result);
-            return;
-        }
-        result["success"] = 1;
-        sess.username = username;
-        sess.name = users[username]["name"];
-        sess.dataset = users[username]["dataset"];
-        sess.topic = users[username]["topic"];
+    Users.findById(username, function(err, userinfo){
+      if(err){
+        console.log(err);
+        res.send("잘못된 유저입니다.")
+      }else if(userinfo.nowflag === 2){
+        res.send("이미참여")
+      }
+      else{
+        sess.userid = username;
+        sess.dataset = userinfo.dataset;
+        sess.topic = userinfo.topic;
         sess.Qd12 = "";
-        sess.Qd1 = users[username]["Qd1"];
-        sess.Qd2 = users[username]["Qd2"];
-        sess.nowflag = 0;
-        //res.json(result);
+        sess.Qd1 = [];
+        sess.Qd2 = [];
+        sess.nowflag = userinfo.nowflag;
         res.redirect("/userstudy/bestMap")
+      }
     });
+
   });
 
-};
+}

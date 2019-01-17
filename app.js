@@ -5,6 +5,7 @@ var bodyParser = require("body-parser");
 var session = require('express-session');
 
 var News = require('./models/news');
+var Users = require('./models/user');
 
 const PORT = process.env.PORT || 3000;
 
@@ -27,7 +28,7 @@ app.use(session({
 
 app.set("view engine", "ejs");
 
-var router = require("./router/main")(app,News);
+var router = require("./router/main")(app,News,Users);
 
 app.listen(PORT, function(){
   console.log("SERVER HAS STARTED!!!");

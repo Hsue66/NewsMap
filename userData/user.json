@@ -11,4 +11,8 @@
       "password": "123123",
       "name": "velopert"
   }
+	{ "_id" : ObjectId("5c403fbd561d173f2857d496"), "topic" : "greece debt", "dataset" : [ "greece.json", "greece2.json" ], "nowflag" : 0 }
+	{ "_id" : ObjectId("5c403fbd561d173f2857d497"), "topic" : "pohang earthquake", "dataset" : [ "greece2.json", "greece.json" ], "nowflag" : 0 }
+	{ "_id" : ObjectId("5c403fbd561d173f2857d498"), "topic" : "greece debt", "dataset" : [ "greece2.json", "greece.json" ], "nowflag" : 2 }
+
 }
