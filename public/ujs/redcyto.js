@@ -192,14 +192,14 @@ fetch('/cytoData/'+dataset,{mode:'no-cors'})
     if(redTopics.includes(topic)){
       var idx = redTopics.indexOf(topic)
       redTopics.splice(idx,1);
-      document.getElementById('redtl').innerHTML= redTopics;
+//      document.getElementById('redtl').innerHTML= redTopics;
       document.getElementById('topics').value = redTopics;
       //스타일 바꾸기
       removehighlightEdge(event.cy);
     }
     else{
       redTopics.push(topic);
-      document.getElementById('redtl').innerHTML= redTopics;
+//      document.getElementById('redtl').innerHTML= redTopics;
       document.getElementById('topics').value = redTopics;
       setRedunEdge(cy.nodes(pre),edge.data("topic")[0]);
     }

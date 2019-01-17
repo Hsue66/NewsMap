@@ -1,11 +1,14 @@
 <% include ../partial/header %>
+<link rel="stylesheet" href="/ucss/common.css">
 <% include ../partial/nav %>
+
 <div class="body_contents">
 <div class="container">
-  <div class="jumbotron">
+  <div class="jumbotron question">
     <h1>QUESTION 2.1 ~ 2.4)</h1>
-    <h2>각 맵에 대해 상세 평가 </h2>
-    <p>Map<%=String.fromCharCode('A'.charCodeAt(0)+now)%>에 대해 평가합니다.</p>
+    <h2>각각 맵에 대해 상세 평가 : Map<%=String.fromCharCode('A'.charCodeAt(0)+now)%>에 대해 평가합니다.
+    </h2>
+    <p>평가를 진행하시려면 Next버튼을 클릭하세요.</p>
     <p><a class="btn btn-primary btn-lg" href="/userstudy/cohMap" role="button"> Next</a></p>
   </div>
 

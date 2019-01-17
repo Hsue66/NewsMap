@@ -1,12 +1,19 @@
 <% include ../partial/header %>
 <link rel="stylesheet" href="/ucss/common.css">
+<style type="text/css">
+      .table_title{
+        font-size: 20px;
+        font-weight: bold;
+        text-align: center;
+      }
+</style>
 <% include ../partial/nav %>
 <div class="body_contents">
 <div class="container">
   <div class="jumbotron question">
     <h1>QUESTION1)</h1>
-    <h2>주제 '<%=topic%>'에 대해 A와 B중 어떤것이?</h2>
-    <p>라디오 버튼을 클릭하세요</p>
+    <h2>주제 '<%=topic%>'에 대해 맵 A와 맵 B중 어떤 맵이 주제에 대한 전체 내용을 잘 다루고 있습니까?</h2>
+    <p>해당 맵의 라디오 버튼을 클릭하세요</p>
     <div class="answers">
       <form action="/sendQ1" method="post">
         <input type="radio" name="Map" value="MapA">
@@ -21,7 +28,7 @@
     <% for(var i=0; i<dataset.length; i++){ %>
     <div class="col-sm-6" id="datadiv<%=i%>" value="<%=dataset[i]%>">
       <div class="row" >
-        <div class="col-lg-12 ">
+        <div class="col-lg-12 table_title">
           Map<%=String.fromCharCode('A'.charCodeAt(0)+i)%>
         </div>
         <div class="col-lg-12 cy" id="cy<%=i%>">
@@ -31,7 +38,7 @@
           <h2 id="title<%=i%>"></h2>
           <h4 id="date<%=i%>"></h4>
           <p class="text-center" id="contents<%=i%>">
-            키워드를 검색하신 후, 뉴스를 클릭하시면 기사를 살펴볼 수 있습니다
+            뉴스를 클릭하시면 기사를 살펴볼 수 있습니다
           </p>
         </div>
       </div>
