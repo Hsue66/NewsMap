@@ -209,4 +209,7 @@ module.exports = function(app,News,Users){
 
   });
 
+  app.get("/TLtest",function(req,res){
+    res.render("userstudy/redTLMap",{idx:0,dataset:'greeceData.json'});
+  });
 }
