@@ -13,17 +13,35 @@
   <div class="jumbotron question">
     <h1>QUESTION1)</h1>
     <h2>주제 '<%=topic%>'에 대해 맵 A와 맵 B중 어떤 맵이 주제에 대한 전체 내용을 잘 다루고 있습니까?</h2>
-    <p>해당 맵의 라디오 버튼을 클릭하세요</p>
+    <p>맵에 해당하는 버튼을 클릭하세요</p>
     <div class="answers">
       <form action="/sendQ1" method="post">
-        <input type="radio" name="Map" value="MapA">
-        <label for="MapA">Map A</label>
-        <input type="radio" name="Map" value="MapB">
-        <label for="MapB">Map B</label>
-        <button class="btn">Next</button>
+        <div class="btn-group">
+          <label class="btn btn-default btn-lg">
+              <input type="radio" name="Map" value="MapA" autofocus="true"/> Map A
+          </label>
+          <label class="btn btn-default btn-lg">
+              <input type="radio" name="Map" value="MapB" /> Map B
+          </label>
+        </div>
+
+        <button class="btn btn-primary btn-lg">Next</button>
       </form>
     </div>
   </div>
+  <script type="text/javascript">
+  $(function () {
+       // When your submit button is clicked
+       $("form").submit(function (e) {
+           // If it is not checked, prevent the default behavior (your submit)
+           if (!$('input[name="Map"]').is(':checked')) {
+               alert("해당하는 맵의 버튼을 선택해주세요!");
+               e.preventDefault();
+           }
+       });
+   });
+  </script>
+
   <div class="row">
     <% for(var i=0; i<dataset.length; i++){ %>
     <div class="col-sm-6" id="datadiv<%=i%>" value="<%=dataset[i]%>">
@@ -49,6 +67,7 @@
 
 </div>
 
+<script src="/ujs/cytostyle.js"></script>
 <script src="/ujs/cyto0.js"></script>
 <script src="/ujs/cyto1.js"></script>
 <% include ../partial/footer %>

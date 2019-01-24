@@ -70,7 +70,7 @@ module.exports = function(app,News,Users){
       sess.Qd12 = sess.dataset[0];
     else
       sess.Qd12 = sess.dataset[1];
-
+    console.log(sess.Qd12)
     res.redirect("/userstudy/eachMap");
   });
 

@@ -1,77 +1,3 @@
-var styles = [
-  {
-    "selector": "node",
-    "style": {
-      "height": 20,
-      "width": 20,
-      'content': 'data(name)',
-      'text-opacity': 0,
-      'text-wrap': 'ellipsis',
-      'text-max-width': '150px',
-      "background-color": "#969696"
-    }
-  },
-  {
-      "selector": ":parent",
-      "style": {
-          "background-opacity": 0.1
-      }
-  },
-
-  {
-      "selector": "node.cy-expand-collapse-collapsed-node",
-      "style": {
-          "background-color": "#1f3263",
-          "shape": "pentagon"
-      }
-  },
-
-  {
-      "selector": "edge",
-      "style": {
-          "curve-style" : "bezier",
-          "width": 3,
-          "line-color": "#ccc",
-          "target-arrow-shape": "triangle",
-          "target-arrow-color": "#ccc"
-      }
-  },
-
-  {
-      "selector": "edge.meta",
-      "style": {
-          "width": 2,
-          "line-color": "red"
-      }
-  },
-
-  {
-      "selector": ":selected",
-      "style": {
-          "border-width": 3,
-          "border-color": "#DAA520"
-      }
-  }
-];
-
-var colorPreset = ["#ff2933","#ff5733",
-"#ff8a33",
-"#ffbd33",
-"#fff033",
-"#dbff33",
-"#a8ff33",
-"#33f3ff",
-"#33c0ff",
-"#338dff",
-"#335aff",
-"#3f33ff",
-"#7233ff",
-"#a533ff",
-"#d833ff",
-"#ff33f3",
-"#ff33c0",
-"#ff338d",
-"#ff335a"];
 //var query = document.getElementById('inputQuery').value;
 
 var dataset = document.getElementById('cy').getAttribute('value');
@@ -145,10 +71,10 @@ fetch('/cytoData/'+dataset,{mode:'no-cors'})
   function sethighlightEdge(node){
     var nowList = node.data('topic');
     for(var now in nowList){
-      color = getRandomColor();
       node.successors().each(
         function(e){
           if(e.isEdge() && e.data('topic').includes(nowList[now])){
+            var color = colorPreset[allTopics[e.data('topic')]]
             e.style('line-color', color);
             e.style('target-arrow-color', color);
             }
@@ -156,6 +82,7 @@ fetch('/cytoData/'+dataset,{mode:'no-cors'})
       node.predecessors().each(
         function(e){
           if(e.isEdge() && e.data('topic').includes(nowList[now])){
+            var color = colorPreset[allTopics[e.data('topic')]]
             e.style('line-color', color);
             e.style('target-arrow-color', color);
             }
@@ -167,14 +94,10 @@ fetch('/cytoData/'+dataset,{mode:'no-cors'})
   // edge색상 초기화
   function removehighlightEdge(t_cy){
     t_cy.edges().forEach(function(target){
-      //console.log(target.data("topic")[0])
-      if(redTopics.includes(target.data("topic")[0])){
-        target.style('line-color', "red");
-        target.style('target-arrow-color', "red");
-      }else{
-        target.style('line-color', "#ccc");
-        target.style('target-arrow-color', "#ccc");
-      }
+      var etopic = target.data('topic')[0];
+      var color = colorShade[allTopics[etopic]];
+      target.style('line-color', color);
+      target.style('target-arrow-color', color);
     });
   }
 
@@ -199,17 +122,17 @@ fetch('/cytoData/'+dataset,{mode:'no-cors'})
     });
   }
 
-  // // mouse over시,  edge 색상변경
-  // cy.on('mouseover','node',function(event){
-  //   var node = event.target;
-  //   sethighlightEdge(node);
-  // });
-  //
-  // // mouse out시, edge 원상태
-  // cy.on('mouseout', 'node', function(event) {
-  //   var node = event.target;
-  //   removehighlightEdge(event.cy);
-  // });
+  // mouse over시,  edge 색상변경
+  cy.on('mouseover','node',function(event){
+    var node = event.target;
+    sethighlightEdge(node);
+  });
+
+  // mouse out시, edge 원상태
+  cy.on('mouseout', 'node', function(event) {
+    var node = event.target;
+    removehighlightEdge(event.cy);
+  });
 
   // click시, article update
   cy.on("click","node", function(event){
@@ -230,34 +153,16 @@ fetch('/cytoData/'+dataset,{mode:'no-cors'})
     t_cy.edges().forEach(function(target){
       var etopic = target.data('topic')[0];
       if(!(Object.keys(allTopics).includes(etopic))){
-        allTopics[etopic] = colorPreset[cidx];
+        allTopics[etopic] = cidx;
         cidx = (cidx + 3)%19;
         console.log(cidx)
       }
-      var color = allTopics[etopic];
+      var color = colorShade[allTopics[etopic]];
       target.style('line-color', color);
       target.style('target-arrow-color', color);
     });
   }
 
-  /*
-  function highlightTimeline(t_cy){
-    t_cy.edges().forEach(function(target){
-      var etopic = target.data('topic')[0];
-      if(Object.keys(allTopics).includes(etopic)){
-        var color = allTopics[etopic];
-        target.style('line-color', color);
-        target.style('target-arrow-color', color);
-        console.log("already "+etopic);
-      }else{
-        var color = getRandomColor();
-        allTopics[etopic] = color;
-        target.style('line-color', color);
-        target.style('target-arrow-color', color);
-        console.log(allTopics);
-      }
-    });
-  }*/
   console.log(allTopics)
 
   var api = cy.expandCollapse('get');
