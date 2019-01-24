@@ -9,6 +9,17 @@
 <% include ../partial/nav %>
 <div class="body_contents">
 
+<script type="text/javascript">
+$(function () {
+   if (<%=passed%> === 3) {
+      alert("잘못된 ID입니다. 다시 로그인해주세요.");
+   }
+   else if (<%=passed%> === 2) {
+      alert("이미 참여하셨습니다.");
+   }
+ });
+</script>
+
 <div class="container">
   <div class="jumbotron question">
     <h1>User Study</h1>

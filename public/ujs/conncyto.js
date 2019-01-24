@@ -1,63 +1,4 @@
-var styles = [
-  {
-    "selector": "node",
-    "style": {
-      "height": 20,
-      "width": 20,
-      'content': 'data(name)',
-      'text-opacity': 0,
-      'text-wrap': 'ellipsis',
-      'text-max-width': '150px',
-      "background-color": "#969696"
-    }
-  },
-  {
-      "selector": ":parent",
-      "style": {
-          "background-opacity": 0.1
-      }
-  },
-
-  {
-      "selector": "node.cy-expand-collapse-collapsed-node",
-      "style": {
-          "background-color": "#1f3263",
-          "shape": "pentagon"
-      }
-  },
-
-  {
-      "selector": "edge",
-      "style": {
-          "curve-style" : "bezier",
-          "width": 3,
-          "line-color": "#ccc",
-          "target-arrow-shape": "triangle",
-          "target-arrow-color": "#ccc"
-      }
-  },
-
-  {
-      "selector": "edge.meta",
-      "style": {
-          "width": 2,
-          "line-color": "red"
-      }
-  },
-
-  {
-      "selector": ":selected",
-      "style": {
-          "border-width": 3,
-          "border-color": "#DAA520"
-      }
-  }
-];
-
-//var query = document.getElementById('inputQuery').value;
-
 var dataset = document.getElementById('cy').getAttribute('value');
-
 
 fetch('/cytoData/'+dataset,{mode:'no-cors'})
 .then(function(res){
@@ -126,10 +67,10 @@ fetch('/cytoData/'+dataset,{mode:'no-cors'})
   function sethighlightEdge(node){
     var nowList = node.data('topic');
     for(var now in nowList){
-      color = getRandomColor();
       node.successors().each(
         function(e){
           if(e.isEdge() && e.data('topic').includes(nowList[now])){
+            var color = colorPreset[allTopics[e.data('topic')]];
             e.style('line-color', color);
             e.style('target-arrow-color', color);
             }
@@ -137,6 +78,7 @@ fetch('/cytoData/'+dataset,{mode:'no-cors'})
       node.predecessors().each(
         function(e){
           if(e.isEdge() && e.data('topic').includes(nowList[now])){
+            var color = colorPreset[allTopics[e.data('topic')]];
             e.style('line-color', color);
             e.style('target-arrow-color', color);
             }
@@ -144,12 +86,13 @@ fetch('/cytoData/'+dataset,{mode:'no-cors'})
     }
   }
 
-
   // edge색상 초기화
   function removehighlightEdge(t_cy){
     t_cy.edges().forEach(function(target){
-      target.style('line-color', "#ccc");
-      target.style('target-arrow-color', "#ccc");
+      var etopic = target.data('topic')[0];
+      var color = colorShade[allTopics[etopic]];
+      target.style('line-color', color);
+      target.style('target-arrow-color', color);
     });
   }
 
@@ -189,14 +132,22 @@ fetch('/cytoData/'+dataset,{mode:'no-cors'})
         var idx = connNodes.indexOf(nodename)
         connNodes.splice(idx,1);
         connNIds.splice(idx,1);
-        document.getElementById('conn').innerHTML = connNodes;
+        var str = '';
+        connNodes.forEach(function(i){
+          str = str+i+"</br>";
+        });
+        document.getElementById('conn').innerHTML= str;
         document.getElementById('Con_articles').value = connNIds;
         node.style('background-color',"yellow")
       }
       else{
         connNodes.push(nodename);
         connNIds.push(nodeid);
-        document.getElementById('conn').innerHTML= connNodes;
+        var str = '';
+        connNodes.forEach(function(i){
+          str = str+i+"</br>";
+        });
+        document.getElementById('conn').innerHTML= str;
         document.getElementById('Con_articles').value = connNIds;
         node.style('background-color',"red")
       }
@@ -212,5 +163,23 @@ fetch('/cytoData/'+dataset,{mode:'no-cors'})
   }
 
   var api = cy.expandCollapse('get');
+
+  var allTopics = {};
+  var cidx = Math.floor(Math.random() * 19);
+  highlightTimeline(cy);
+
+
+  function highlightTimeline(t_cy){
+    t_cy.edges().forEach(function(target){
+      var etopic = target.data('topic')[0];
+      if(!(Object.keys(allTopics).includes(etopic))){
+        allTopics[etopic] = cidx;
+        cidx = (cidx + 3)%19;
+      }
+      var color = colorShade[allTopics[etopic]];
+      target.style('line-color', color);
+      target.style('target-arrow-color', color);
+    });
+  }
 
 });

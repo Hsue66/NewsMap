@@ -1,5 +1,6 @@
 var fs = require("fs");
 var ObjectID = require('mongodb').ObjectID;
+const url = require('url');
 
 module.exports = function(app,News,Users){
 
@@ -56,7 +57,9 @@ module.exports = function(app,News,Users){
   });
 
   app.get("/userstudy",function(req,res){
-    res.render('userstudy/login');
+    var passed = req.query.err;
+    console.log(passed)
+    res.render('userstudy/login',{passed:passed});
   });
 
   app.get("/userstudy/bestMap",function(req,res){
@@ -190,10 +193,10 @@ module.exports = function(app,News,Users){
 
     Users.findById(username, function(err, userinfo){
       if(err){
-        console.log(err);
-        res.send("잘못된 유저입니다.")
+        //console.log(err);
+        res.redirect(url.format({pathname:"/userstudy",query:{'err':3}}));
       }else if(userinfo.nowflag === 2){
-        res.send("이미참여")
+        res.redirect(url.format({pathname:"/userstudy",query:{'err':2}}));
       }
       else{
         sess.userid = username;
@@ -211,5 +214,9 @@ module.exports = function(app,News,Users){
 
   app.get("/TLtest",function(req,res){
     res.render("userstudy/redTLMap",{idx:0,dataset:'greeceData.json'});
+  });
+
+  app.get("*",function(req,res){
+    res.render("wrong");
   });
 }
