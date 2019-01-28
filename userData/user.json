@@ -17,6 +17,16 @@
 
 }
 
+
+{ "_id" : ObjectId("5c40273414c17636e953c487"), "userid" : "qwerq", "hello" : 0 }
+
+{ "_id" : ObjectId("5c40276814c17636e953c488"), "userid" : "user0", "topic" : "greece debt", "dataset" : [ "greece2.json", "greece.json" ], "nowflag" : 0 }
+
+{ "_id" : ObjectId("5c402a9d14c17636e953c489"), "topic" : "pohang debt", "dataset" : [ "greece2.json", "greece.json" ], "nowflag" : 0 }
+
+{ "_id" : ObjectId("5c403367f2e28eaeb0157e40"), "userid" : "hello", "topic" : "greece debt", "dataset" : [ "greece.json", "greece2.json" ], "nowflag" : 0, "hello" : 0, "bestMap" : "", "eachMap" : { "dataset1" : [ null, null, null, "c,b" ], "dataset2" : [ "e,d,k", "h,g", "", "c" ] } }
+
+
 "#CF4F4F",
 "#CF664F",
 "#CF854F",

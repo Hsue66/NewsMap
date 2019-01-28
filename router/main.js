@@ -212,6 +212,24 @@ module.exports = function(app,News,Users){
 
   });
 
+  app.get("/userstudy/result",function(req,res){
+    Users.countDocuments({"topic":"greece debt","bestMap":"greece.json"},function(err, num){
+      if(err)
+       console.log(err);
+       else
+         console.log(num);
+    });
+
+    // Users.find({"topic":"greece debt","bestMap":"greece2.json"},function(err,users){
+    //   if(err)
+    //     console.log(err);
+    //   else {
+    //     console.log(users);
+    //   }
+    // })
+    res.send("REsult");
+  });
+
   app.get("/TLtest",function(req,res){
     res.render("userstudy/redTLMap",{idx:0,dataset:'greeceData.json'});
   });
