@@ -29,6 +29,10 @@ body {
   padding-bottom: 500px;
 }
 
+.row:before, .row:after{
+  display: inline-block !important;
+}
+
 .footer{
   background-color: #edeff2;
   position: absolute;
