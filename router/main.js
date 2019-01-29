@@ -206,10 +206,14 @@ module.exports = function(app,News,Users){
         sess.Qd1 = [];
         sess.Qd2 = [];
         sess.nowflag = userinfo.nowflag;
-        res.redirect("/userstudy/bestMap")
+        res.redirect("/userstudy/prev");
+        //res.redirect("/userstudy/bestMap");
       }
     });
+  });
 
+  app.get("/userstudy/prev",function(req,res){
+    res.render("userstudy/prev");
   });
 
   app.get("/userstudy/result",function(req,res){
