@@ -5,7 +5,15 @@ const url = require('url');
 module.exports = function(app,News,Users){
 
   app.get("/",function(req,res){
-    res.render("main");
+    res.render("mainT");
+    //res.render("main");   // 원래 main - 검색기반
+  });
+
+  // main에서 dropdown list에서 선택 시,
+  app.get("/searchT",function(req,res){
+    var sQuery = req.query.sQuery;
+    console.log(sQuery);
+    res.render("search",{sQuery : sQuery});
   });
 
   app.get("/search",function(req,res){

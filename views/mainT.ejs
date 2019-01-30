@@ -1,0 +1,90 @@
+<% include partial/header %>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+<link rel="stylesheet" href="/script/animate.css/animate.css">
+<link rel="stylesheet" href="/css/main.css">
+<script src="/script/wowjs/dist/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>
+
+<% include partial/nav %>
+
+<div class="body_contents">
+
+  <div class="m_search">
+      <div class="m_search_con wow bounceIn" >
+        <h1>NEWS MAP</h1>
+        <div class="m_subheading">
+          News map application
+        </div>
+        <div class="form-group row">
+          <form action="/searchT" method="get">
+            <div class="col-sm-9">
+              <select class="form-control input-lg" name="sQuery">
+                <option value="" disabled selected>맵으로 보고싶은 키워드를 아래에서 선택하세요.</option>
+                <option value="월드컵,축구">월드컵,축구</option>
+                <option value="지진,포항">지진,포항</option>
+                <option value="greece">greece</option>
+              </select>
+            </div>
+            <div class="col-sm-3">
+              <button class="btn btn-search input-lg" type="submit">make a News Map for Me!</button>
+            </div>
+          </div>
+        </form>
+      </div>
+  </div>
+
+  <div class="container">
+    <div class="m_intro">
+      <div class="intro_header">
+        What We do
+      </div>
+      <div class="row intro_con">
+        <div class="col-sm-4">
+          <div class="intro_box">
+            <div class="icon">
+              <span class="glyphicon glyphicon-eye-open"></span>
+            </div>
+            <div>
+              <div class="intro_title">At a glance</div>
+              <p class="intro_detail  wow fadeInUp">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-4 ">
+          <div class="intro_box">
+            <div class="icon">
+              <span class="glyphicon glyphicon-fullscreen"></span>
+            </div>
+            <div>
+              <div class="intro_title">zoomable</div>
+              <p class="intro_detail  wow fadeInUp">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-4 ">
+          <div class="intro_box">
+            <div class="icon">
+              <i class="far fa-map"></i>
+            </div>
+            <div>
+              <div class="intro_title">well organized</div>
+              <p class="intro_detail wow fadeInUp">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+<% include partial/footer %>
