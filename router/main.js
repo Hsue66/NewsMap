@@ -2,6 +2,18 @@ var fs = require("fs");
 var ObjectID = require('mongodb').ObjectID;
 const url = require('url');
 
+var multer = require('multer');
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/');
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '.json');
+  }
+});
+var upload = multer({ storage: storage });
+
+
 module.exports = function(app,News,Users){
 
   app.get("/",function(req,res){
@@ -51,10 +63,6 @@ module.exports = function(app,News,Users){
         res.render("search",{sQuery : sQuery});
       }
     });
-  });
-
-  app.get("/demo",function(req,res){
-    res.render("demo",{sQuery : 'vis'});
   });
 
   app.get('/news', function(req,res){
@@ -244,6 +252,22 @@ module.exports = function(app,News,Users){
 
   app.get("/TLtest",function(req,res){
     res.render("userstudy/redTLMap",{idx:0,dataset:'greeceData.json'});
+  });
+
+  app.get("/upload",function(req,res){
+    res.render("upload");
+  });
+
+  var convert = require("./convert.js");
+  var UploadFiles = upload.fields([{ name: 'dataset'}, { name: 'sample'}]);
+  app.post('/upload',UploadFiles, function(req,res){
+    convert.convert(fs);
+    var output = `<a href="/demo">생성된 Map보기</a>`
+    res.send(output);
+  });
+
+  app.get("/demo",function(req,res){
+    res.render("demo");
   });
 
   app.get("*",function(req,res){

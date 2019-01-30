@@ -1,0 +1,23 @@
+<% include partial/header %>
+<link rel="stylesheet" href="/css/search.css">
+
+<% include partial/nav %>
+<div class="body_contents">
+    <div class="search">
+      <div class="search_con container" >
+          <h1>THIS IS NEWS MAP</h1>
+        </div>
+      </div>
+
+
+    <div class="container">
+      <form action="upload" method="post" enctype="multipart/form-data">
+        <label for="data">Choose dataset file</label>
+        <input type="file" id="data" name="dataset">
+        <label for="result">Choose result file</label>
+        <input type="file" id="result" name="sample">
+        <input type="submit" class="btn btn-default" value="Upload">
+      </form>
+    </div>
+
+<% include partial/footer %>
