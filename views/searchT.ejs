@@ -1,0 +1,60 @@
+<% include partial/header %>
+<link rel="stylesheet" href="/css/search.css">
+
+<% include partial/nav %>
+<div class="body_contents">
+  <%
+    var dataset = ["월드컵,축구","지진,포항","greece"];
+    var selected = ["","","",""];
+
+    selected[dataset.indexOf(sQuery)+1] = "selected";
+    //console.log(selected);
+  %>
+
+    <div class="search">
+      <div class="search_con container" >
+        <h1>THIS IS NEWS MAP</h1>
+        <div class="form-group row">
+          <form action="/searchT" method="get">
+            <div class="col-sm-9">
+              <select class="form-control input-lg" name="sQuery" id="inputQuery">
+                <option value="" disabled <%=selected[0]%>>맵으로 보고싶은 키워드를 아래에서 선택하세요.</option>
+                <%
+                for(var i=0; i<dataset.length; i++){ %>
+                  <option value=<%=dataset[i]%> <%=selected[i+1]%> > <%=dataset[i]%></option>
+                <%
+                }
+                %>
+              </select>
+            </div>
+            <div class="col-sm-3">
+              <button class="btn btn-search input-lg" type="submit">make a News Map for Me!</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="ec_btn pull-right">
+        <button class="btn btn-primary active " type="button" name="button" id="expandAll">Expand All</button>
+        <button class="btn btn-default active" type="button" name="button" id="collapseAll">Collapse All</button>
+      </div>
+    </div>
+    <div class="container">
+      <div class="cy" id="cy">
+
+      </div>
+    </div>
+
+    <div class="container" >
+      <div class="title text-center">
+        <h2 id="title"></h2>
+        <h4 id="date"></h4>
+      </div>
+      <p class="article-content text-center" id="contents">
+        키워드를 검색하신 후, 뉴스를 클릭하시면 기사를 살펴볼 수 있습니다
+      </p>
+    </div>
+    <script src="js/cytoT.js"></script>
+<% include partial/footer %>

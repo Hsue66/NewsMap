@@ -68,10 +68,10 @@ fetch('/cytoData/'+query+'Data.json',{mode:'no-cors'})
   function sethighlightEdge(node){
     var nowList = node.data('topic');
     for(var now in nowList){
-      color = getRandomColor();
       node.successors().each(
         function(e){
           if(e.isEdge() && e.data('topic').includes(nowList[now])){
+            var color = colorPreset[allTopics[e.data('topic')]];
             e.style('line-color', color);
             e.style('target-arrow-color', color);
             }
@@ -79,6 +79,7 @@ fetch('/cytoData/'+query+'Data.json',{mode:'no-cors'})
       node.predecessors().each(
         function(e){
           if(e.isEdge() && e.data('topic').includes(nowList[now])){
+            var color = colorPreset[allTopics[e.data('topic')]];
             e.style('line-color', color);
             e.style('target-arrow-color', color);
             }
@@ -86,12 +87,13 @@ fetch('/cytoData/'+query+'Data.json',{mode:'no-cors'})
     }
   }
 
-
   // edge색상 초기화
   function removehighlightEdge(t_cy){
     t_cy.edges().forEach(function(target){
-      target.style('line-color', "#ccc");
-      target.style('target-arrow-color', "#ccc");
+      var etopic = target.data('topic')[0];
+      var color = colorShade[allTopics[etopic]];
+      target.style('line-color', color);
+      target.style('target-arrow-color', color);
     });
   }
 
@@ -107,7 +109,6 @@ fetch('/cytoData/'+query+'Data.json',{mode:'no-cors'})
     removehighlightEdge(event.cy);
   });
 
-  var clickBefore;
   // click시, article update
   cy.on("click","node", function(event){
     var node = event.target;
@@ -120,9 +121,28 @@ fetch('/cytoData/'+query+'Data.json',{mode:'no-cors'})
 
   document.getElementById("expandAll").addEventListener("click", function () {
     api.expandAll();
+    highlightTimeline(cy);
   });
 
   document.getElementById("collapseAll").addEventListener("click", function () {
     api.collapseAll();
+    highlightTimeline(cy);
   });
+
+  var allTopics = {};
+  var cidx = Math.floor(Math.random() * 19);
+  highlightTimeline(cy);
+
+  function highlightTimeline(t_cy){
+    t_cy.edges().forEach(function(target){
+      var etopic = target.data('topic')[0];
+      if(!(Object.keys(allTopics).includes(etopic))){
+        allTopics[etopic] = cidx;
+        cidx = (cidx + 3)%19;
+      }
+      var color = colorShade[allTopics[etopic]];
+      target.style('line-color', color);
+      target.style('target-arrow-color', color);
+    });
+  }
 });
