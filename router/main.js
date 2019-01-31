@@ -281,21 +281,43 @@ module.exports = function(app,News,Users,Datasets){
   });
 
   app.get("/userstudy/result",function(req,res){
-    Users.countDocuments({"topic":"greece debt","bestMap":"greece.json"},function(err, num){
-      if(err)
-       console.log(err);
-       else
-         console.log(num);
-    });
+    var data = {
+      "greece debt":[]
+    };
+    data["greece debt"][0] ={
+      "datasetId":"greece.json",
+      "best":0,
+      "incohA":3,
+      "connA":5
+    };
+    data["greece debt"][1] = {
+      "datasetId":"greece2.json",
+      "best":0,
+      "incohA":4,
+      "connA":3
+    };
 
-    // Users.find({"topic":"greece debt","bestMap":"greece2.json"},function(err,users){
-    //   if(err)
-    //     console.log(err);
-    //   else {
-    //     console.log(users);
-    //   }
-    // })
-    res.send("REsult");
+    var topics = {
+      "greece debt":["greece.json","greece2.json"]
+    };
+
+    var best = [];
+    for(var key in topics){
+      for(var i=0; i<topics[key].length; i++){
+        Users.countDocuments({"topic":key,"bestMap":topics[key][i]}, function(err, num){
+          if(err)
+            console.log(err);
+          else{
+            best.push(num);
+            console.log(best)
+          }
+        });
+      }
+    }
+    console.log(best)
+    console.log(data)
+
+    res.render("userstudy/result",{data: data});
   });
 
   app.get("/TLtest",function(req,res){
