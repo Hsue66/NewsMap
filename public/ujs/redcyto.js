@@ -1,4 +1,5 @@
 var dataset = document.getElementById('cy').getAttribute('value');
+document.getElementById('topicsN').value = 0;
 
 fetch('/cytoData/'+dataset,{mode:'no-cors'})
 .then(function(res){
@@ -135,6 +136,7 @@ fetch('/cytoData/'+dataset,{mode:'no-cors'})
       redTopics.splice(idx,1);
 //      document.getElementById('redtl').innerHTML= redTopics;
       document.getElementById('topics').value = redTopics;
+      document.getElementById('topicsN').value = redTopics.length;
       //스타일 바꾸기
       removehighlightEdge(event.cy);
     }
@@ -142,6 +144,7 @@ fetch('/cytoData/'+dataset,{mode:'no-cors'})
       redTopics.push(topic);
 //      document.getElementById('redtl').innerHTML= redTopics;
       document.getElementById('topics').value = redTopics;
+      document.getElementById('topicsN').value = redTopics.length;
       setRedunEdge(cy.nodes(pre),edge.data("topic")[0]);
     }
   });

@@ -14,7 +14,7 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage });
 
 
-module.exports = function(app,News,Users){
+module.exports = function(app,News,Users,Datasets){
 
   app.get("/",function(req,res){
     res.render("mainT");
@@ -106,16 +106,22 @@ module.exports = function(app,News,Users){
   app.post("/sendQ2",function(req,res){
     var sess = req.session;
 
-    if(sess.nowflag)
+    if(sess.nowflag){
       sess.Qd2[parseInt(req.body.redflag)] = req.body.articles;
-    else
+      sess.Qd2num[parseInt(req.body.redflag)] = parseInt(req.body.articlesN);
+    }
+    else{
       sess.Qd1[parseInt(req.body.redflag)] = req.body.articles;
-
+      sess.Qd1num[parseInt(req.body.redflag)] = parseInt(req.body.articlesN);
+    }
     console.log("next")
     console.log(req.body.articles)
+    console.log(parseInt(req.body.articlesN))
     console.log("------------------")
     console.log(sess.Qd1)
+    console.log(sess.Qd1num)
     console.log(sess.Qd2)
+    console.log(sess.Qd2num)
 
     if(parseInt(req.body.redflag))
       res.redirect("/userstudy/redTLMap");
@@ -136,16 +142,22 @@ module.exports = function(app,News,Users){
   app.post("/sendQ3",function(req,res){
     var sess = req.session;
 
-    if(sess.nowflag)
+    if(sess.nowflag){
       sess.Qd2[2] = req.body.topics;
-    else
+      sess.Qd2num[2] = parseInt(req.body.topicsN);
+    }
+    else{
       sess.Qd1[2] = req.body.topics;
-
+      sess.Qd1num[2] = parseInt(req.body.topicsN);
+    }
     console.log("Q3")
     console.log(req.body.topics)
+    console.log(req.body.topicsN)
     console.log("------------------")
     console.log(sess.Qd1)
+    console.log(sess.Qd1num)
     console.log(sess.Qd2)
+    console.log(sess.Qd2num)
 
     res.redirect("/userstudy/conMap");
   });
@@ -159,21 +171,28 @@ module.exports = function(app,News,Users){
     var sess = req.session;
 
 
-        console.log("Q4")
-        console.log(req.body.Con_articles)
-        console.log("------------------")
+    console.log("Q4")
+    console.log(req.body.Con_articles)
+    console.log(req.body.Con_articlesN)
+    console.log("------------------")
 
     if(sess.nowflag){
       sess.Qd2[3] = req.body.Con_articles;
+      sess.Qd2num[3] = parseInt(req.body.Con_articlesN);
       console.log(sess.Qd1)
+      console.log(sess.Qd1num)
       console.log(sess.Qd2)
+      console.log(sess.Qd2num)
       sess.nowflag = sess.nowflag+1;
       res.redirect("/userstudy/finish")
     }
     else{
       sess.Qd1[3] = req.body.Con_articles;
+      sess.Qd1num[3] = parseInt(req.body.Con_articlesN);
       console.log(sess.Qd1)
+      console.log(sess.Qd1num)
       console.log(sess.Qd2)
+      console.log(sess.Qd2num)
       sess.nowflag = sess.nowflag+1;
       res.redirect("/userstudy/eachMap")
     }
@@ -190,7 +209,35 @@ module.exports = function(app,News,Users){
                     "dataset1":sess.Qd1,
                     "dataset2":sess.Qd2
                   }
+      };
+      var insertV = [];
+      insertV[0] = {
+        "userId": sess.userid,
+        "datasetId": sess.dataset[0],
+        "incohA": sess.Qd1num[0],
+        "recurA": sess.Qd1num[1],
+        "recurT": sess.Qd1num[2],
+        "connA": sess.Qd1num[3]
+      };
+      insertV[1] = {
+        "userId": sess.userid,
+        "datasetId": sess.dataset[1],
+        "incohA": sess.Qd2num[0],
+        "recurA": sess.Qd2num[1],
+        "recurT": sess.Qd2num[2],
+        "connA": sess.Qd2num[3]
+      };
+
+      for(var i=0; i<2; i++){
+        Datasets.updateOne({'userId':sess.userid, "datasetId":sess.dataset[i]},{$set:insertV[i]},{upsert:true},function(err,res){
+          if(err)
+            console.log(err);
+          else {
+            console.log("saved "+sess.dataset[i]);
+          }
+        });
       }
+
       Users.updateOne({'_id':ObjectID(sess.userid)},{$set:updateV},function(err,res){
         if(err)
           console.log(err);
@@ -221,9 +268,10 @@ module.exports = function(app,News,Users){
         sess.Qd12 = "";
         sess.Qd1 = [];
         sess.Qd2 = [];
+        sess.Qd1num = [];
+        sess.Qd2num = [];
         sess.nowflag = userinfo.nowflag;
         res.redirect("/userstudy/prev");
-        //res.redirect("/userstudy/bestMap");
       }
     });
   });

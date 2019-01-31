@@ -1,4 +1,5 @@
 var dataset = document.getElementById('cy').getAttribute('value');
+document.getElementById('Con_articlesN').value = 0;
 
 fetch('/cytoData/'+dataset,{mode:'no-cors'})
 .then(function(res){
@@ -138,6 +139,7 @@ fetch('/cytoData/'+dataset,{mode:'no-cors'})
         });
         document.getElementById('conn').innerHTML= str;
         document.getElementById('Con_articles').value = connNIds;
+        document.getElementById('Con_articlesN').value = connNIds.length;
         node.style('background-color',"yellow")
       }
       else{
@@ -149,6 +151,7 @@ fetch('/cytoData/'+dataset,{mode:'no-cors'})
         });
         document.getElementById('conn').innerHTML= str;
         document.getElementById('Con_articles').value = connNIds;
+        document.getElementById('Con_articlesN').value = connNIds.length;
         node.style('background-color',"red")
       }
     }
