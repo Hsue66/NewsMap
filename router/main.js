@@ -280,49 +280,63 @@ module.exports = function(app,News,Users,Datasets){
     res.render("userstudy/prev");
   });
 
+  var calcData = {
+    'greece debt':{
+      'greece2.json':{'incohA':0, 'recurA':0, 'recurT':0, 'connA':0, 'best':0, 'nodes':9, 'tls':2 },
+      'greece.json':{'incohA':0, 'recurA':0, 'recurT':0, 'connA':0, 'best':0, 'nodes':14, 'tls':4 }
+    },
+    'pohang debt':{
+      'dcData.json':{'incohA':0, 'recurA':0, 'recurT':0, 'connA':0, 'best':0, 'nodes':4, 'tls':1 },
+      'Data.json':{'incohA':0, 'recurA':0, 'recurT':0, 'connA':0, 'best':0, 'nodes':4, 'tls':1 }
+    }
+  };
+
   app.get("/userstudy/result",function(req,res){
-    var data = {
-      "greece debt":[]
-    };
-    data["greece debt"][0] ={
-      "datasetId":"greece.json",
-      "best":0,
-      "incohA":3,
-      "connA":5
-    };
-    data["greece debt"][1] = {
-      "datasetId":"greece2.json",
-      "best":0,
-      "incohA":4,
-      "connA":3
-    };
-
-    var topics = {
-      "greece debt":["greece.json","greece2.json"]
-    };
-
-    var best = [];
-    for(var key in topics){
-      for(var i=0; i<topics[key].length; i++){
-        Users.countDocuments({"topic":key,"bestMap":topics[key][i]}, function(err, num){
-          if(err)
-            console.log(err);
-          else{
-            best.push(num);
-            console.log(best)
-          }
-        });
+    for(var topic in calcData){
+      for(var dataset in calcData[topic]){
+        calcBest(topic, dataset);
+        calcAll(topic, dataset);
       }
     }
-    console.log(best)
-    console.log(data)
+    console.log(calcData)
 
-    res.render("userstudy/result",{data: data});
+    res.render("userstudy/result",{data:calcData});
   });
 
-  app.get("/TLtest",function(req,res){
-    res.render("userstudy/redTLMap",{idx:0,dataset:'greeceData.json'});
-  });
+  var calcBest = function(topic,dId){
+    Users.countDocuments({"topic":topic,"bestMap":dId}, function(err, num){
+      if(err)
+        console.log(err);
+      else
+        calcData[topic][dId].best = num;
+    });
+  }
+
+  var calcAll = function(topic, dId){
+    Datasets.aggregate([
+      { $match: {
+          datasetId: dId
+      }},
+      { $group : {
+        _id:'null',
+        incohA: { $sum : "$incohA"},
+        recurA: { $sum : "$recurA"},
+        recurT: { $sum : "$recurT"},
+        connA: { $sum : "$connA"},
+        count: { $sum : 1 }
+      }}
+    ], function(err,result){
+      if(err)
+        console.log(err);
+      else{
+        var base = (result[0].count*calcData[topic][dId].nodes);
+        calcData[topic][dId].incohA = result[0].incohA/base;
+        calcData[topic][dId].recurA = result[0].recurA/base;
+        calcData[topic][dId].connA = result[0].connA/base;
+        calcData[topic][dId].recurT = result[0].recurT/(result[0].count*calcData[topic][dId].tls);
+      }
+    });
+  }
 
   app.get("/upload",function(req,res){
     res.render("upload");
@@ -330,6 +344,7 @@ module.exports = function(app,News,Users,Datasets){
 
   var convert = require("./convert.js");
   var UploadFiles = upload.fields([{ name: 'dataset'}, { name: 'sample'}]);
+  
   app.post('/upload',UploadFiles, function(req,res){
     convert.convert(fs);
     var output = `<a href="/demo">생성된 Map보기</a>`
@@ -343,4 +358,5 @@ module.exports = function(app,News,Users,Datasets){
   app.get("*",function(req,res){
     res.render("wrong");
   });
+
 }

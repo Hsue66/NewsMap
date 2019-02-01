@@ -11,9 +11,11 @@
       "password": "123123",
       "name": "velopert"
   }
-	{ "_id" : ObjectId("5c403fbd561d173f2857d496"), "topic" : "greece debt", "dataset" : [ "greece.json", "greece2.json" ], "nowflag" : 0 }
-	{ "_id" : ObjectId("5c403fbd561d173f2857d497"), "topic" : "pohang earthquake", "dataset" : [ "greece2.json", "greece.json" ], "nowflag" : 0 }
-	{ "_id" : ObjectId("5c403fbd561d173f2857d498"), "topic" : "greece debt", "dataset" : [ "greece2.json", "greece.json" ], "nowflag" : 2 }
+
+	
+	{ "_id" : ObjectId("5c403fbd561d173f2857d497"), "topic" : "pohang earthquake", "dataset" : [ "dcData.json", "Data.json" ], "nowflag" : 0, "bestMap" : "greece.json", "eachMap" : { "dataset1" : [ "e,d,k", "g,h", "moon", "c" ], "dataset2" : [ "", "", "", "" ] } }
+	{ "_id" : ObjectId("5c403fbd561d173f2857d496"), "topic" : "greece debt", "dataset" : [ "greece.json", "greece2.json" ], "nowflag" : 0, "bestMap" : "greece.json", "eachMap" : { "dataset1" : [ "f,d", "", "germany,strike", "k" ], "dataset2" : [ "e,d,k", "g,h", "", "c" ] } }
+	{ "_id" : ObjectId("5c403fbd561d173f2857d498"), "topic" : "greece debt", "dataset" : [ "greece2.json", "greece.json" ], "nowflag" : 0, "bestMap" : "greece.json", "eachMap" : { "dataset1" : [ "c,b", "c,e", "", "" ], "dataset2" : [ "", "", "germany", "k" ] } }
 
 }
 

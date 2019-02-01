@@ -6,23 +6,32 @@
 <div class="container">
   <div class="jumbotron question">
     <h1>Result</h1>
-
+    <%# <form class="" action="/userstudy/result" method="get">
+      <input type="hidden" name="calc" value="true">
+      <div class="form-group">
+        <button class="btn btn-lg btn-primary btn-block">Calc</button>
+      </div>
+    </form> %>
   </div>
 
   <div class="container">
     <%
-    for(var key in data){%>
-      <h2><%=key%></h2>
-    <%
-      data[key].forEach(function(d){ %>
+    for(var topic in data){%>
+      <br><h2><%=topic%></h2>
+      <%
+      for(var dataset in data[topic]){ %>
         <div class="col-sm-6">
-          <h3><%=d.datasetId%></h3>
-          <h4><%=d.best%></h4>
-          <h4><%=d.incohA%></h4>
+          <h3><%=dataset%></h3>
+          <h4>best :<%=data[topic][dataset].best%></h4>
+          <h4>incohA : <%=data[topic][dataset].incohA%></h4>
+          <h4>recurA : <%=data[topic][dataset].recurA%></h4>
+          <h4>recurT : <%=data[topic][dataset].recurT%></h4>
+          <h4>connA : <%=data[topic][dataset].connA%></h4>
         </div>
-  <%  });
+    <%}
     }
     %>
+
   </div>
 
 
