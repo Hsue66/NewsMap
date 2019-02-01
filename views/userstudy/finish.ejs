@@ -1,8 +1,13 @@
 <% include ../partial/header %>
 <link rel="stylesheet" href="/ucss/common.css">
-<style type="text/css">
 
-</style>
+<script>
+  history.pushState(null, null, location.href);
+  window.onpopstate = function(event) {
+    history.go(1);
+  };
+</script>
+
 <% include ../partial/nav %>
 <div class="body_contents">
 <div class="container">
