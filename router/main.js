@@ -285,7 +285,7 @@ module.exports = function(app,News,Users,Datasets){
       'greece2.json':{'incohA':0, 'recurA':0, 'recurT':0, 'connA':0, 'best':0, 'nodes':9, 'tls':2 },
       'greece.json':{'incohA':0, 'recurA':0, 'recurT':0, 'connA':0, 'best':0, 'nodes':14, 'tls':4 }
     },
-    'pohang debt':{
+    'pohang earthquake':{
       'dcData.json':{'incohA':0, 'recurA':0, 'recurT':0, 'connA':0, 'best':0, 'nodes':4, 'tls':1 },
       'Data.json':{'incohA':0, 'recurA':0, 'recurT':0, 'connA':0, 'best':0, 'nodes':4, 'tls':1 }
     }
@@ -344,7 +344,7 @@ module.exports = function(app,News,Users,Datasets){
 
   var convert = require("./convert.js");
   var UploadFiles = upload.fields([{ name: 'dataset'}, { name: 'sample'}]);
-  
+
   app.post('/upload',UploadFiles, function(req,res){
     convert.convert(fs);
     var output = `<a href="/demo">생성된 Map보기</a>`
