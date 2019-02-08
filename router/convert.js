@@ -35,7 +35,9 @@ var convert = function(fs){
   for (var n in nodesNdates) {
       sortable.push([n, nodesNdates[n]]);
   }
-
+  console.log("before")
+  console.log(sortable)
+  console.log("-----------------------")
   sortable.sort(function(a, b) {
       return a[1] - b[1];
   });
