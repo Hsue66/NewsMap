@@ -149,10 +149,9 @@ var convert = function(fs){
       if (err) {
           console.error(err);
           return;
-      };
+      }
       console.log("File has been created");
   });
-
 }
 
 exports.convert = convert;
