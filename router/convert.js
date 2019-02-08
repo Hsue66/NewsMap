@@ -6,12 +6,16 @@ var convert = function(fs){
   var topicIdx = 1;
 
   var allNodes = [];
+  var nodesNdates = {};
 
   //edge 만들기 + 모든 노드 위치set
   for(var d in result){
     var nodes = result[d]["line"];
     var clusters = result[d]["clustering"];
     allNodes=allNodes.concat(nodes);
+
+    for(var n=0; n<nodes.length; n++)
+        nodesNdates[nodes[n]] = dataset[nodes[n]]['date'];
 
     //edge 만들기
     for(var n=0; n<nodes.length-1; n++){
@@ -27,6 +31,16 @@ var convert = function(fs){
     topicIdx = topicIdx+1;
   }
 
+  var items = Object.keys(nodesNdates).map(function(key) {
+    return [key, nodesNdates[key]];
+  });
+
+  // Sort the array based on the second element
+  items.sort(function(first, second) {
+    return second[1] - first[1];
+  });
+  console.log(items)
+  /*
   allNodes = Array.from(new Set(allNodes)).sort();
   var nodeNpos = {};
 
@@ -35,7 +49,14 @@ var convert = function(fs){
     nodeNpos[n] = x;
     x = x+ 150;
   });
+  */
+  var nodeNpos = {};
 
+  var x = 0;
+  items.forEach(function(n){
+    nodeNpos[n[0]] = x;
+    x = x+ 150;
+  });
   console.log(nodeNpos)
 
   y = 100;
