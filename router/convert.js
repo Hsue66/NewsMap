@@ -31,17 +31,25 @@ var convert = function(fs){
     topicIdx = topicIdx+1;
   }
 
-  // var sortable = [];
-  //
-  // for (var n in nodesNdates) {
-  //     sortable.push([n, nodesNdates[n]]);
-  // }
-  //console.log(nodesNdates)
+  var sortable = [];
 
+  for (var n in nodesNdates) {
+      sortable.push([n, nodesNdates[n]]);
+  }
+  /*
+  allNodes = Array.from(new Set(allNodes)).sort();
   var nodeNpos = {};
 
   var x = 0;
-  nodesNdates.forEach(function(n){
+  allNodes.forEach(function(n){
+    nodeNpos[n] = x;
+    x = x+ 150;
+  });
+  */
+  var nodeNpos = {};
+
+  var x = 0;
+  sortable.forEach(function(n){
     nodeNpos[n[0]] = x;
     x = x+ 150;
   });
