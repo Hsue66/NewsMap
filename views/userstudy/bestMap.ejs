@@ -9,7 +9,10 @@
       .cy-container{
         padding-left: 5%;
         padding-right: 5%;
-        min-height: 1000px;
+        min-height: 1500px;
+      }
+      #cy0{
+        border-right: 3px solid #b2b2b2;
       }
 </style>
 <% include ../partial/nav %>
@@ -51,7 +54,8 @@
 
 <div class="cy-container">
   <div class="row">
-    <% for(var i=0; i<dataset.length; i++){ %>
+    <%
+    for(var i=0; i<dataset.length; i++){ %>
     <div class="col-sm-6" id="datadiv<%=i%>" value="<%=dataset[i]%>">
       <div class="row" >
         <div class="col-lg-12 table_title">
