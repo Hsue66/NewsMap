@@ -10,7 +10,7 @@ fetch('/cytoData/'+dataset,{mode:'no-cors'})
       container: document.getElementById('cy'),
       pan: { x: 0, y: 0 },
       zoom: 1,
-      minZoom: 0.7,
+      minZoom: 0.9,
       maxZoom: 5,
       wheelSensitivity: 0.4,
       style: styles,
