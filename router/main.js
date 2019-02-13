@@ -80,6 +80,7 @@ module.exports = function(app,News,Users,Datasets){
 
   app.get("/userstudy/bestMap",function(req,res){
     var sess = req.session;
+    console.log(sess.dataset)
     res.render("userstudy/bestMap",{topic:sess.topic, dataset:sess.dataset});
   });
 
@@ -95,7 +96,7 @@ module.exports = function(app,News,Users,Datasets){
 
   app.get('/userstudy/eachMap',function(req,res){
     var sess = req.session;
-    res.render("userstudy/eachMap",{now:sess.nowflag});
+    res.render("userstudy/eachMap",{now:sess.nowflag,con:sess.conflag[sess.nowflag]});
   });
 
   app.get("/userstudy/cohMap",function(req,res){
@@ -159,7 +160,23 @@ module.exports = function(app,News,Users,Datasets){
     console.log(sess.Qd2)
     console.log(sess.Qd2num)
 
-    res.redirect("/userstudy/conMap");
+    if(sess.conflag[sess.nowflag]){
+      if(sess.nowflag){
+        sess.Qd2[3] = '';
+        sess.Qd2num[3] = 0;
+      }
+      else {
+        sess.Qd1[3] = '';
+        sess.Qd1num[3] = 0;
+      }
+      sess.nowflag = sess.nowflag+1;
+      if(sess.nowflag === 2)
+        res.redirect("/userstudy/finish");
+      else
+        res.redirect("/userstudy/eachMap");
+    }
+    else
+      res.redirect("/userstudy/conMap");
   });
 
   app.get("/userstudy/conMap/",function(req,res){
@@ -169,7 +186,6 @@ module.exports = function(app,News,Users,Datasets){
 
   app.post("/sendQ4",function(req,res){
     var sess = req.session;
-
 
     console.log("Q4")
     console.log(req.body.Con_articles)
@@ -208,7 +224,8 @@ module.exports = function(app,News,Users,Datasets){
         "eachMap": {
                     "dataset1":sess.Qd1,
                     "dataset2":sess.Qd2
-                  }
+                  },
+        "nowflag": 2
       };
       var insertV = [];
       insertV[0] = {
@@ -254,23 +271,25 @@ module.exports = function(app,News,Users,Datasets){
     var username = req.body.id;
     var sess = req.session;
 
-    Users.findById(username, function(err, userinfo){
-      if(err){
-        //console.log(err);
+    console.log(username)
+    Users.find({"id":username}, function(err, userinfo){
+      if(err || userinfo.length === 0){
+        console.log(err);
         res.redirect(url.format({pathname:"/userstudy",query:{'err':3}}));
       }else if(userinfo.nowflag === 2){
         res.redirect(url.format({pathname:"/userstudy",query:{'err':2}}));
       }
       else{
-        sess.userid = username;
-        sess.dataset = userinfo.dataset;
-        sess.topic = userinfo.topic;
+        sess.userid = userinfo[0]._id;
+        sess.dataset = userinfo[0].dataset;
+        sess.topic = userinfo[0].topic;
         sess.Qd12 = "";
         sess.Qd1 = [];
         sess.Qd2 = [];
         sess.Qd1num = [];
         sess.Qd2num = [];
-        sess.nowflag = userinfo.nowflag;
+        sess.nowflag = userinfo[0].nowflag;
+        sess.conflag = userinfo[0].conflag;
         res.redirect("/userstudy/prev");
       }
     });

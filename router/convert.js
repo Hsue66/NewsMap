@@ -1,14 +1,17 @@
+/*jshint sub:true*/
+
 var convert = function(fs){
+  // read Dataset and result from each file
   var dataset = JSON.parse(fs.readFileSync('uploads/dataset.json', 'utf8'));
   var result = JSON.parse(fs.readFileSync('uploads/sample.json', 'utf8'));
 
-  var vis = [];
+  var vis = [];         // 생성된 결과
   var topicIdx = 1;
 
   var allNodes = [];
   var nodesNdates = {};
 
-  //edge 만들기 + 모든 노드 위치set
+  //edge data생성
   for(var d in result){
     var nodes = result[d]["line"];
     var clusters = result[d]["clustering"];
@@ -17,7 +20,6 @@ var convert = function(fs){
     for(var n=0; n<nodes.length; n++)
       nodesNdates[nodes[n]] = dataset[nodes[n]]['date'];
 
-    //edge 만들기
     for(var n=0; n<nodes.length-1; n++){
       edgeDict = {};
       data = {};
@@ -31,37 +33,27 @@ var convert = function(fs){
     topicIdx = topicIdx+1;
   }
 
+  // node의 위치 지정
   var sortable = [];
+  for(var n in nodesNdates)
+    sortable.push([n, nodesNdates[n]]);
 
-  for (var n in nodesNdates) {
-      sortable.push([n, nodesNdates[n]]);
-  }
-  /*
-  allNodes = Array.from(new Set(allNodes)).sort();
   var nodeNpos = {};
-
-  var x = 0;
-  allNodes.forEach(function(n){
-    nodeNpos[n] = x;
-    x = x+ 150;
-  });
-  */
-  var nodeNpos = {};
-
   var x = 0;
   sortable.forEach(function(n){
     nodeNpos[n[0]] = x;
     x = x+ 150;
   });
-  console.log(nodeNpos)
+  console.log(nodeNpos);
 
+  // node data생성
   y = 100;
   topicIdx = 0;
   already = [];
   nodeElems = {};
   result.forEach(function(d){
-    nodes = d["line"]
-    clusters = d["clustering"]
+    nodes = d["line"];
+    clusters = d["clustering"];
 
     before = 0;
     nodeByG = [];
@@ -82,7 +74,7 @@ var convert = function(fs){
     nodeByG.forEach(function(group){
       flag = 0;
       parent = "";
-
+      // group의 경우, node하나 복사 후 parent로 지정
       if (group.length > 1){
         flag = 1;
         n = group[0];
@@ -135,12 +127,13 @@ var convert = function(fs){
     });
   });
 
+
   Object.keys(nodeElems).forEach(function(key) {
     //console.log(key, nodeElems[key]);
     vis.push(nodeElems[key]);
   });
-  //console.log(vis)
 
+  // result.json에 생성된 결과 저장
   fs.writeFileSync("cytoData/result.json", JSON.stringify(vis), (err) => {
       if (err) {
           console.error(err);

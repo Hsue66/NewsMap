@@ -6,6 +6,11 @@
         font-weight: bold;
         text-align: center;
       }
+      .cy-container{
+        padding-left: 5%;
+        padding-right: 5%;
+        min-height: 1000px;
+      }
 </style>
 <% include ../partial/nav %>
 <div class="body_contents">
@@ -14,6 +19,7 @@
     <h1>QUESTION1)</h1>
     <h2>주제 '<%=topic%>'에 대해 맵 A와 맵 B중 어떤 맵이 주제에 대한 전체 내용을 잘 다루고 있습니까?</h2>
     <p>맵에 해당하는 버튼을 클릭하세요</p>
+
     <div class="answers">
       <form action="/sendQ1" method="post">
         <div class="btn-group">
@@ -41,7 +47,9 @@
        });
    });
   </script>
+</div>
 
+<div class="cy-container">
   <div class="row">
     <% for(var i=0; i<dataset.length; i++){ %>
     <div class="col-sm-6" id="datadiv<%=i%>" value="<%=dataset[i]%>">
@@ -52,10 +60,10 @@
         <div class="col-lg-12 cy" id="cy<%=i%>">
 
         </div>
-        <div class="col-lg-12">
+        <div class="col-lg-12 text-center">
           <h2 id="title<%=i%>"></h2>
           <h4 id="date<%=i%>"></h4>
-          <p class="text-center" id="contents<%=i%>">
+          <p class="article-content text-center" id="contents<%=i%>">
             뉴스를 클릭하시면 기사를 살펴볼 수 있습니다
           </p>
         </div>
@@ -64,10 +72,8 @@
     <%}
     %>
   </div>
-
 </div>
 
-<script src="/ujs/cytostyle.js"></script>
 <script src="/ujs/cyto0.js"></script>
 <script src="/ujs/cyto1.js"></script>
 <% include ../partial/footer %>

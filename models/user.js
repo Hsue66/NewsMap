@@ -4,6 +4,7 @@ var userSchema = new mongoose.Schema({
   userid: String,
   topic: String,
   nowflag: Number,
+  conflag: [Number],
   dataset: [String],
   bestMap: String,
   eachMap: {

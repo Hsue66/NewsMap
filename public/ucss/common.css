@@ -4,9 +4,16 @@ h1,h2 {
 
 .cy{
   background-color: #edeff2;
-  height: 500px;
+  height: 700px;
 }
 
 .question{
   margin-top: 50px;
+}
+
+.article-content{
+  color: #1f3263;
+  font-size: 16px;
+  margin-bottom: 100px;
+  /* min-height: 350px; */
 }
