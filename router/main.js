@@ -276,7 +276,7 @@ module.exports = function(app,News,Users,Datasets){
       if(err || userinfo.length === 0){
         console.log(err);
         res.redirect(url.format({pathname:"/userstudy",query:{'err':3}}));
-      }else if(userinfo.nowflag === 2){
+      }else if(userinfo[0].nowflag === 2){
         res.redirect(url.format({pathname:"/userstudy",query:{'err':2}}));
       }
       else{
