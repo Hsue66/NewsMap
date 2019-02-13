@@ -17,7 +17,7 @@
   <div class="container">
     <%
     for(var topic in data){%>
-      <br><h2><%=topic%></h2>
+      <h2><%=topic%></h2>
       <%
       for(var dataset in data[topic]){ %>
         <div class="col-sm-6">
@@ -26,12 +26,10 @@
           <h4>incohA : <%=data[topic][dataset].incohA%></h4>
           <h4>recurA : <%=data[topic][dataset].recurA%></h4>
           <h4>recurT : <%=data[topic][dataset].recurT%></h4>
-          <h4>connA : <%=data[topic][dataset].connA%></h4>
         </div>
     <%}
     }
     %>
-
   </div>
 
 
