@@ -124,8 +124,8 @@ fetch('/cytoData/'+dataset,{mode:'no-cors'})
     var node = event.target;
     var nodename = node.data("name")
     var nodeid = node.data("id")
-    if(incohNodes.includes(nodename)){
-      var idx = incohNodes.indexOf(nodename)
+    if(incohNIds.includes(nodeid)){
+      var idx = incohNIds.indexOf(nodeid)
       incohNodes.splice(idx,1);
       incohNIds.splice(idx,1);
       var str = '';
@@ -149,6 +149,8 @@ fetch('/cytoData/'+dataset,{mode:'no-cors'})
       document.getElementById('articlesN').value = incohNIds.length;
       node.style('background-color',"#d32f2f")
     }
+    // console.log(incohNodes)
+    // console.log(incohNIds)
   });
 
   var api = cy.expandCollapse('get');
