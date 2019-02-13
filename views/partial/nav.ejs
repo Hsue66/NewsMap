@@ -3,12 +3,19 @@
   <nav class="navbar navbar-default">
     <div class="container">
       <div class="navbar-header">
-        <a href="/" class="navbar-brand">NEWS MAP</a>
+        <a href="#" onclick="blockLink();" class="navbar-brand">NEWS MAP</a>
       </div>
       <ul class="nav navbar-nav navbar-right">
-        <li> <a href="/">Home</a> </li>
-        <li> <a href="/searchT">Search</a> </li>
+        <li> <a href="#" onclick="blockLink();">Home</a> </li>
+        <li> <a href="#" onclick="blockLink();">Search</a> </li>
         <li> <a href="/userstudy">User Study</a> </li>
       </ul>
+      <script type="text/javascript">
+      function blockLink(){
+        console.log('block');
+        alert("유저스터디 기간에는 해당 경로에 접근하실 수 없습니다.");
+        e.preventDefault();
+      }
+      </script>
     </div>
   </nav>
