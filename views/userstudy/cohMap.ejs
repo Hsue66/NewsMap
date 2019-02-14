@@ -22,9 +22,9 @@
     <%
       var q = '타임라인과 관련없는 기사를 모두 고르세요.'
       if(redflag)
-        q =  '중복된 내용을 나타내는 기사를 모두 고르세요.';
+        q =  '중복된 내용의 기사를 모두 고르세요.';
     %>
-    <h2><%=q%></h2>
+    <h2>'<%=topic%>'에 대해 지도 <%=String.fromCharCode('A'.charCodeAt(0)+idx)%>에서 <%=q%></h2>
     <p>노드를 우클릭하면 선택됩니다.</p>
     <form action="/sendQ2" method="post">
 

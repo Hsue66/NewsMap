@@ -17,12 +17,17 @@
 <div class="container">
   <div class="jumbotron question">
     <h1>Question <%=1+now%>.<%=1+idx%>)</h1>
-    <h2>타임라인이 교차하는 지점 중 각 타임라인들과 연관되지 않는 교차점을 고르세요.</h2>
+    <h2>'<%=topic%>'에 대해 지도 <%=String.fromCharCode('A'.charCodeAt(0)+idx)%>에서 타임라인이 교차하는 지점 중 각 타임라인들의 속성을 모두 반영하지 못하는 교차점을 고르세요.</h2>
+    <%
+      var next = "Next";
+      if(idx === 1)
+        next = "제출하기";
+      %>
     <%if(con===1){%>
-      <p>연결지점이 없어서 선택하지 않습니다.
-      next버튼을 눌러주세요.</p>
+      <p>연결지점이 없으므로 선택하지 않습니다.
+      <%=next%>버튼을 눌러주세요.</p>
     <%}else{%>
-    <p>노란색 노드를 우클릭하면 선택됩니다.</p>
+    <p>교차하는 지점에 해당하는 노란색 노드를 우클릭하면 선택됩니다.</p>
     <%}%>
     <form action="/sendQ4" method="post">
 
@@ -31,11 +36,7 @@
       </div>
       <input type="hidden" name="Con_articles" id="Con_articles">
       <input type="hidden" name="Con_articlesN" id="Con_articlesN">
-      <%
-            var next = "Next";
-            if(idx === 1)
-              next = "제출하기";
-            %>
+
       <button class="btn btn-lg"><%=next%></button>
     </form>
   </div>

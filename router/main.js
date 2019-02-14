@@ -103,7 +103,7 @@ module.exports = function(app,News,Users,Datasets){
 
   app.get("/userstudy/cohMap",function(req,res){
     var sess = req.session;
-    res.render("userstudy/cohMap",{now:sess.nowflag,idx:sess.dataflag,dataset:sess.dataset[sess.dataflag],redflag:0});
+    res.render("userstudy/cohMap",{topic:sess.topic,now:sess.nowflag,idx:sess.dataflag,dataset:sess.dataset[sess.dataflag],redflag:0});
   });
 
   app.post("/sendQ2",function(req,res){
@@ -146,12 +146,12 @@ module.exports = function(app,News,Users,Datasets){
 
   app.get("/userstudy/redMap",function(req,res){
     var sess = req.session;
-    res.render("userstudy/cohMap",{now:sess.nowflag,idx:sess.dataflag,dataset:sess.dataset[sess.dataflag],redflag:1});
+    res.render("userstudy/cohMap",{topic:sess.topic,now:sess.nowflag,idx:sess.dataflag,dataset:sess.dataset[sess.dataflag],redflag:1});
   });
 
   app.get("/userstudy/redTLMap",function(req,res){
     var sess = req.session;
-    res.render("userstudy/redTLMap",{now:sess.nowflag,idx:sess.dataflag,dataset:sess.dataset[sess.dataflag]});
+    res.render("userstudy/redTLMap",{topic:sess.topic,now:sess.nowflag,idx:sess.dataflag,dataset:sess.dataset[sess.dataflag]});
   });
 
   app.post("/sendQ3",function(req,res){
@@ -203,7 +203,7 @@ module.exports = function(app,News,Users,Datasets){
 
   app.get("/userstudy/conMap/",function(req,res){
     var sess = req.session;
-    res.render("userstudy/conMap",{con:sess.conflag[sess.dataflag],now:sess.nowflag,idx:sess.dataflag,dataset:sess.dataset[sess.dataflag]});
+    res.render("userstudy/conMap",{topic:sess.topic,con:sess.conflag[sess.dataflag],now:sess.nowflag,idx:sess.dataflag,dataset:sess.dataset[sess.dataflag]});
   });
 
   app.post("/sendQ4",function(req,res){
