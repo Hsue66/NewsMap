@@ -78,11 +78,6 @@ module.exports = function(app,News,Users,Datasets){
     res.render('userstudy/login',{passed:passed});
   });
 
-  app.get('/userstudy/eachMap',function(req,res){
-    var sess = req.session;
-    res.render("userstudy/eachMap",{now:sess.nowflag});
-  });
-
   app.get("/userstudy/bestMap",function(req,res){
     var sess = req.session;
     console.log(sess.dataset)
@@ -96,20 +91,23 @@ module.exports = function(app,News,Users,Datasets){
     else
       sess.Qd12 = sess.dataset[1];
     console.log(sess.Qd12)
-
-    sess.nowflag = sess.nowflag+1;
     res.redirect("/userstudy/eachMap");
+  });
+
+  app.get('/userstudy/eachMap',function(req,res){
+    var sess = req.session;
+    res.render("userstudy/eachMap",{now:sess.nowflag,con:sess.conflag[sess.nowflag]});
   });
 
   app.get("/userstudy/cohMap",function(req,res){
     var sess = req.session;
-    res.render("userstudy/cohMap",{now:sess.nowflag,idx:sess.dataflag,dataset:sess.dataset[sess.dataflag],redflag:0});
+    res.render("userstudy/cohMap",{idx:sess.nowflag,dataset:sess.dataset[sess.nowflag],redflag:0});
   });
 
   app.post("/sendQ2",function(req,res){
     var sess = req.session;
 
-    if(sess.dataflag){
+    if(sess.nowflag){
       sess.Qd2[parseInt(req.body.redflag)] = req.body.articles;
       sess.Qd2num[parseInt(req.body.redflag)] = parseInt(req.body.articlesN);
     }
@@ -126,38 +124,26 @@ module.exports = function(app,News,Users,Datasets){
     console.log(sess.Qd2)
     console.log(sess.Qd2num)
 
-    if(sess.dataflag){
-      sess.dataflag = 0;
-      sess.nowflag = sess.nowflag +1;
-      res.redirect("/userstudy/eachMap");
-    }
-    else{
-      sess.dataflag = 1;
-      if(parseInt(req.body.redflag)===1)
-        res.redirect("/userstudy/redMap");
-      else
-        res.redirect("/userstudy/cohMap");
-    }
-    // if(parseInt(req.body.redflag))
-    //   res.redirect("/userstudy/redTLMap");
-    // else
-    //   res.redirect("/userstudy/redMap");
+    if(parseInt(req.body.redflag))
+      res.redirect("/userstudy/redTLMap");
+    else
+      res.redirect("/userstudy/redMap");
   });
 
   app.get("/userstudy/redMap",function(req,res){
     var sess = req.session;
-    res.render("userstudy/cohMap",{now:sess.nowflag,idx:sess.dataflag,dataset:sess.dataset[sess.dataflag],redflag:1});
+    res.render("userstudy/cohMap",{idx:sess.nowflag,dataset:sess.dataset[sess.nowflag],redflag:1});
   });
 
   app.get("/userstudy/redTLMap",function(req,res){
     var sess = req.session;
-    res.render("userstudy/redTLMap",{now:sess.nowflag,idx:sess.dataflag,dataset:sess.dataset[sess.dataflag]});
+    res.render("userstudy/redTLMap",{idx:sess.nowflag,dataset:sess.dataset[sess.nowflag]});
   });
 
   app.post("/sendQ3",function(req,res){
     var sess = req.session;
 
-    if(sess.dataflag){
+    if(sess.nowflag){
       sess.Qd2[2] = req.body.topics;
       sess.Qd2num[2] = parseInt(req.body.topicsN);
     }
@@ -174,36 +160,28 @@ module.exports = function(app,News,Users,Datasets){
     console.log(sess.Qd2)
     console.log(sess.Qd2num)
 
-    if(sess.dataflag){
-      sess.dataflag = 0;
-      sess.nowflag = sess.nowflag +1;
-      res.redirect("/userstudy/eachMap");
-    }else{
-      sess.dataflag = 1;
-      res.redirect("/userstudy/redTLMap");
+    if(sess.conflag[sess.nowflag]){
+      if(sess.nowflag){
+        sess.Qd2[3] = '';
+        sess.Qd2num[3] = 0;
+      }
+      else {
+        sess.Qd1[3] = '';
+        sess.Qd1num[3] = 0;
+      }
+      sess.nowflag = sess.nowflag+1;
+      if(sess.nowflag === 2)
+        res.redirect("/userstudy/finish");
+      else
+        res.redirect("/userstudy/eachMap");
     }
-    // if(sess.conflag[sess.nowflag]){
-    //   if(sess.nowflag){
-    //     sess.Qd2[3] = '';
-    //     sess.Qd2num[3] = 0;
-    //   }
-    //   else {
-    //     sess.Qd1[3] = '';
-    //     sess.Qd1num[3] = 0;
-    //   }
-    //   sess.nowflag = sess.nowflag+1;
-    //   if(sess.nowflag === 2)
-    //     res.redirect("/userstudy/finish");
-    //   else
-    //     res.redirect("/userstudy/eachMap");
-    // }
-    // else
-    //   res.redirect("/userstudy/conMap");
+    else
+      res.redirect("/userstudy/conMap");
   });
 
   app.get("/userstudy/conMap/",function(req,res){
     var sess = req.session;
-    res.render("userstudy/conMap",{con:sess.conflag[sess.dataflag],now:sess.nowflag,idx:sess.dataflag,dataset:sess.dataset[sess.dataflag]});
+    res.render("userstudy/conMap",{idx:sess.nowflag,dataset:sess.dataset[sess.nowflag]});
   });
 
   app.post("/sendQ4",function(req,res){
@@ -214,15 +192,15 @@ module.exports = function(app,News,Users,Datasets){
     console.log(req.body.Con_articlesN)
     console.log("------------------")
 
-    if(sess.dataflag){
+    if(sess.nowflag){
       sess.Qd2[3] = req.body.Con_articles;
       sess.Qd2num[3] = parseInt(req.body.Con_articlesN);
       console.log(sess.Qd1)
       console.log(sess.Qd1num)
       console.log(sess.Qd2)
       console.log(sess.Qd2num)
-      //sess.nowflag = sess.nowflag+1;
-      //res.redirect("/userstudy/finish")
+      sess.nowflag = sess.nowflag+1;
+      res.redirect("/userstudy/finish")
     }
     else{
       sess.Qd1[3] = req.body.Con_articles;
@@ -231,22 +209,15 @@ module.exports = function(app,News,Users,Datasets){
       console.log(sess.Qd1num)
       console.log(sess.Qd2)
       console.log(sess.Qd2num)
-      //sess.nowflag = sess.nowflag+1;
-      //res.redirect("/userstudy/eachMap")
-    }
-    if(sess.dataflag){
-      sess.nowflag = sess.nowflag +1;
-      res.redirect("/userstudy/finish");
-    }else{
-      sess.dataflag = 1;
-      res.redirect("/userstudy/conMap");
+      sess.nowflag = sess.nowflag+1;
+      res.redirect("/userstudy/eachMap")
     }
   });
 
   app.get("/userstudy/finish",function(req,res){
     var sess = req.session;
     console.log(sess);
-    if(sess.nowflag === 5){
+    if(sess.nowflag === 2){
       console.log("save "+sess.userid);
       var updateV = {
         "bestMap": sess.Qd12,
@@ -254,7 +225,7 @@ module.exports = function(app,News,Users,Datasets){
                     "dataset1":sess.Qd1,
                     "dataset2":sess.Qd2
                   },
-        "nowflag": 5
+        "nowflag": 2
       };
       var insertV = [];
       insertV[0] = {
@@ -305,7 +276,7 @@ module.exports = function(app,News,Users,Datasets){
       if(err || userinfo.length === 0){
         console.log(err);
         res.redirect(url.format({pathname:"/userstudy",query:{'err':3}}));
-      }else if(userinfo[0].nowflag === 5){
+      }else if(userinfo[0].nowflag === 2){
         res.redirect(url.format({pathname:"/userstudy",query:{'err':2}}));
       }
       else{
@@ -319,7 +290,6 @@ module.exports = function(app,News,Users,Datasets){
         sess.Qd2num = [];
         sess.nowflag = userinfo[0].nowflag;
         sess.conflag = userinfo[0].conflag;
-        sess.dataflag = 0;
         res.redirect("/userstudy/prev");
       }
     });

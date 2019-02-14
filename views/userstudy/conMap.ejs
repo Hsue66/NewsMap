@@ -7,12 +7,23 @@
         }
 </style>
 <% include ../partial/nav %>
+<script>
+  history.pushState(null, null, location.href);
+  window.onpopstate = function(event) {
+    history.go(1);
+  };
+</script>
 <div class="body_contents">
 <div class="container">
   <div class="jumbotron question">
-    <h1>Question <%=2+idx%>.4)</h1>
+    <h1>Question <%=1+now%>.<%=1+idx%>)</h1>
     <h2>타임라인이 교차하는 지점 중 각 타임라인들과 연관되지 않는 교차점을 고르세요.</h2>
+    <%if(con===1){%>
+      <p>연결지점이 없어서 선택하지 않습니다.
+      next버튼을 눌러주세요.</p>
+    <%}else{%>
     <p>노란색 노드를 우클릭하면 선택됩니다.</p>
+    <%}%>
     <form action="/sendQ4" method="post">
 
       <div class="answers" id ="conn">
@@ -21,10 +32,10 @@
       <input type="hidden" name="Con_articles" id="Con_articles">
       <input type="hidden" name="Con_articlesN" id="Con_articlesN">
       <%
-      var next = "Next";
-      if(idx === 1)
-        next = "제출하기";
-      %>
+            var next = "Next";
+            if(idx === 1)
+              next = "제출하기";
+            %>
       <button class="btn btn-lg"><%=next%></button>
     </form>
   </div>

@@ -7,10 +7,18 @@
         }
 </style>
 <% include ../partial/nav %>
+
+<script>
+  history.pushState(null, null, location.href);
+  window.onpopstate = function(event) {
+    history.go(1);
+  };
+</script>
+
 <div class="body_contents">
 <div class="container">
   <div class="jumbotron question">
-    <h1>Question <%=2+idx%>.<%=1+redflag%>)</h1>
+    <h1>Question <%=1+now%>.<%=1+idx%>)</h1>
     <%
       var q = '타임라인과 관련없는 기사를 모두 고르세요.'
       if(redflag)
