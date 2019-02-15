@@ -402,6 +402,19 @@ module.exports = function(app,News,Users,Datasets){
     res.send(output);
   });
 
+  app.get("/upload2",function(req,res){
+    res.render("upload2");
+  });
+
+  var convert2 = require("./convert2.js");
+  var UploadFiles = upload.fields([{ name: 'dataset'}, { name: 'sample'}]);
+
+  app.post('/upload2',UploadFiles, function(req,res){
+    convert2.convert(fs);
+    var output = `<a href="/demo">생성된 Map보기</a>`
+    res.send(output);
+  });
+
   app.get("/demo",function(req,res){
     res.render("demo");
   });
