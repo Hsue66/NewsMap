@@ -6,12 +6,12 @@ var convert = function(fs){
   var dataset = JSON.parse(fs.readFileSync('uploads/dataset.json', 'utf8'));
   var Bresult = JSON.parse(fs.readFileSync('uploads/sample.json', 'utf8'));
 
-  result = [];
+  var result = [];
   for(var d in Bresult){
     timeline = {};
-    nodes = d["line"];
-    clusters = d["clustering"];
-    representation = d["representation"];
+    var nodes = Bresult[d]["line"];
+    var clusters = Bresult[d]["clustering"];
+    var representation = Bresult[d]["representation"];
     line = [];
     cluster = [];
     for(var i =0; i<representation.length; i++){
