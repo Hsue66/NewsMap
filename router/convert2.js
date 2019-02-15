@@ -16,14 +16,14 @@ var convert = function(fs){
     cluster = [];
     for(var i =0; i<representation.length; i++){
       if(representation[i] === 1){
-        line.append(nodes[i]);
-        cluster.append(clusters[i]);
+        line.push(nodes[i]);
+        cluster.push(clusters[i]);
       }
     }
     timeline['line'] = line;
     timeline['clustering'] = cluster;
     print(timeline)
-    result.append(timeline)
+    result.push(timeline)
   }
   print(result)
 
