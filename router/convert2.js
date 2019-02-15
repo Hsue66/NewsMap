@@ -22,10 +22,9 @@ var convert = function(fs){
     }
     timeline['line'] = line;
     timeline['clustering'] = cluster;
-    print(timeline)
     result.push(timeline)
   }
-  print(result)
+  //print(result)
 
 
   var vis = [];         // 생성된 결과
