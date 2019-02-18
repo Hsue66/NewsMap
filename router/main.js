@@ -331,16 +331,16 @@ module.exports = function(app,News,Users,Datasets){
 
   var calcData = {
     '포항 지진':{
-      'pohang1.json':{'incohA':0, 'recurA':0, 'recurT':0, 'connA':0, 'best':0, 'nodes':22, 'tls':5 },
-      'pohang2.json':{'incohA':0, 'recurA':0, 'recurT':0, 'connA':0, 'best':0, 'nodes':23, 'tls':5 }
+      'pohang1.json':{'incohA':0, 'recurA':0, 'recurT':0, 'connA':0, 'best':0, 'nodes':23, 'tls':5, 'cons':2 },
+      'pohang2.json':{'incohA':0, 'recurA':0, 'recurT':0, 'connA':0, 'best':0, 'nodes':19, 'tls':5, 'cons':3 }
     },
-    '신생아 집단 사망 사건':{
-      'baby2.json':{'incohA':0, 'recurA':0, 'recurT':0, 'connA':0, 'best':0, 'nodes':10, 'tls':2 },
-      'baby1.json':{'incohA':0, 'recurA':0, 'recurT':0, 'connA':0, 'best':0, 'nodes':10, 'tls':2 }
+    '북핵관련 국내외 정세':{
+      'baby1.json':{'incohA':0, 'recurA':0, 'recurT':0, 'connA':0, 'best':0, 'nodes':15, 'tls':4, 'cons':5},
+      'baby2.json':{'incohA':0, 'recurA':0, 'recurT':0, 'connA':0, 'best':0, 'nodes':16, 'tls':4,'cons':2 }
     },
     '랜섬웨어':{
-      'ransom2.json':{'incohA':0, 'recurA':0, 'recurT':0, 'connA':0, 'best':0, 'nodes':11, 'tls':2 },
-      'ransom1.json':{'incohA':0, 'recurA':0, 'recurT':0, 'connA':0, 'best':0, 'nodes':10, 'tls':3 }
+      'ransom2.json':{'incohA':0, 'recurA':0, 'recurT':0, 'connA':0, 'best':0, 'nodes':11, 'tls':3 ,'cons':2},
+      'ransom1.json':{'incohA':0, 'recurA':0, 'recurT':0, 'connA':0, 'best':0, 'nodes':12, 'tls':3, 'cons':1}
     }
   };
 
@@ -375,6 +375,7 @@ module.exports = function(app,News,Users,Datasets){
         incohA: { $sum : "$incohA"},
         recurA: { $sum : "$recurA"},
         recurT: { $sum : "$recurT"},
+        connA: { $sum : "$connA"},
         count: { $sum : 1 }
       }}
     ], function(err,result){
@@ -382,9 +383,10 @@ module.exports = function(app,News,Users,Datasets){
         console.log(err);
       else{
         var base = (result[0].count*calcData[topic][dId].nodes);
-        calcData[topic][dId].incohA = result[0].incohA/base;
-        calcData[topic][dId].recurA = result[0].recurA/base;
-        calcData[topic][dId].recurT = result[0].recurT/(result[0].count*calcData[topic][dId].tls);
+        calcData[topic][dId].incohA = 1-(result[0].incohA/base);
+        calcData[topic][dId].recurA = 1-(result[0].recurA/base);
+        calcData[topic][dId].recurT = 1-(result[0].recurT/(result[0].count*calcData[topic][dId].tls));
+        calcData[topic][dId].connA = 1-(result[0].connA/(result[0].count*calcData[topic][dId].cons));
       }
     });
   }
