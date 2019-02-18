@@ -334,7 +334,7 @@ module.exports = function(app,News,Users,Datasets){
       'pohang1.json':{'incohA':0, 'recurA':0, 'recurT':0, 'connA':0, 'best':0, 'nodes':23, 'tls':5, 'cons':2 },
       'pohang2.json':{'incohA':0, 'recurA':0, 'recurT':0, 'connA':0, 'best':0, 'nodes':19, 'tls':5, 'cons':3 }
     },
-    '북핵관련 국내외 정세':{
+    '북한관련 국내외 정세':{
       'baby1.json':{'incohA':0, 'recurA':0, 'recurT':0, 'connA':0, 'best':0, 'nodes':15, 'tls':4, 'cons':5},
       'baby2.json':{'incohA':0, 'recurA':0, 'recurT':0, 'connA':0, 'best':0, 'nodes':16, 'tls':4,'cons':2 }
     },
