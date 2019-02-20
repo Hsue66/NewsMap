@@ -39,40 +39,82 @@ module.exports = function(app,Users,Datasets){
     res.render("search",{sQuery : sQuery});
   });
 
+/**
+ * Show login page
+ *
+ * @param req
+ *            req.query.err
+ * @return 'userstudy/login' page.
+ */
   app.get("/userstudy",function(req,res){
     var passed = req.query.err;
-    console.log(passed)
+    // console.log(passed)
     res.render('userstudy/login',{passed:passed});
   });
 
+  /**
+   * Show preview page
+   *
+   * @return 'userstudy/prev' page.
+   */
+  app.get("/userstudy/prev",function(req,res){
+    res.render("userstudy/prev");
+  });
+
+  /**
+   * Show eachMap page
+   *
+   * @return 'userstudy/eachMap' page.
+   */
   app.get('/userstudy/eachMap',function(req,res){
     var sess = req.session;
     res.render("userstudy/eachMap",{now:sess.nowflag});
   });
 
+  /**
+   * Show bestMap page
+   *
+   * @return 'userstudy/bestMap' page.
+   */
   app.get("/userstudy/bestMap",function(req,res){
     var sess = req.session;
-    console.log(sess.dataset)
     res.render("userstudy/bestMap",{topic:sess.topic, dataset:sess.dataset});
   });
 
+  /**
+   * Save selected map to session and Increase nowflag
+   *
+   * @return redirect to 'userstudy/eachMap' page.
+   */
   app.post("/sendQ1",function(req,res){
     var sess = req.session;
     if(req.body.Map === 'MapA')
       sess.Qd12 = sess.dataset[0];
     else
       sess.Qd12 = sess.dataset[1];
-    console.log(sess.Qd12)
+    // console.log(sess.Qd12)
 
     sess.nowflag = sess.nowflag+1;
     res.redirect("/userstudy/eachMap");
   });
 
+  /**
+   * Show cohMap page
+   *
+   * @return 'userstudy/cohMap' page.
+   */
   app.get("/userstudy/cohMap",function(req,res){
     var sess = req.session;
     res.render("userstudy/cohMap",{topic:sess.topic,now:sess.nowflag,idx:sess.dataflag,dataset:sess.dataset[sess.dataflag],redflag:0});
   });
 
+  /**
+   * Save incoherent nodes or redundant nodes to session and Increase nowflag
+   *
+   * @return If you tested both maps on coherence and redundancy test, redirect to 'userstudy/eachMap'
+             If you tested first maps without redflag, redirect to 'userstudy/cohMap'
+             If you tested first maps with redflag, redirect to 'userstudy/redMap'
+   */
   app.post("/sendQ2",function(req,res){
     var sess = req.session;
 
@@ -84,14 +126,6 @@ module.exports = function(app,Users,Datasets){
       sess.Qd1[parseInt(req.body.redflag)] = req.body.articles;
       sess.Qd1num[parseInt(req.body.redflag)] = parseInt(req.body.articlesN);
     }
-    console.log("next")
-    console.log(req.body.articles)
-    console.log(parseInt(req.body.articlesN))
-    console.log("------------------")
-    console.log(sess.Qd1)
-    console.log(sess.Qd1num)
-    console.log(sess.Qd2)
-    console.log(sess.Qd2num)
 
     if(sess.dataflag){
       sess.dataflag = 0;
@@ -105,10 +139,6 @@ module.exports = function(app,Users,Datasets){
       else
         res.redirect("/userstudy/cohMap");
     }
-    // if(parseInt(req.body.redflag))
-    //   res.redirect("/userstudy/redTLMap");
-    // else
-    //   res.redirect("/userstudy/redMap");
   });
 
   app.get("/userstudy/redMap",function(req,res){
@@ -263,19 +293,27 @@ module.exports = function(app,Users,Datasets){
     res.render("userstudy/finish");
   });
 
+  /**
+   * Log in with the user ID and show preview page if it is correct
+   * and show alert if it is wrong or already participated.
+   *
+   * @param req
+   *            req.body.id : User's login ID value
+   *            req.session : User's session
+   * @return 'userstudy/prev' page or alert in userstudy/login page
+   */
   app.post("/login",function(req,res){
     var username = req.body.id;
     var sess = req.session;
 
-    console.log(username)
+    // console.log(username)
     Users.find({"id":username}, function(err, userinfo){
-      if(err || userinfo.length === 0){
+      if(err || userinfo.length === 0){       // wrong id
         console.log(err);
         res.redirect(url.format({pathname:"/userstudy",query:{'err':3}}));
-      }else if(userinfo[0].nowflag === 5){
+      } else if(userinfo[0].nowflag === 5){   // alredy participated
         res.redirect(url.format({pathname:"/userstudy",query:{'err':2}}));
-      }
-      else{
+      } else{                                 // correct - establish session
         sess.userid = userinfo[0]._id;
         sess.dataset = userinfo[0].dataset;
         sess.topic = userinfo[0].topic;
@@ -292,9 +330,7 @@ module.exports = function(app,Users,Datasets){
     });
   });
 
-  app.get("/userstudy/prev",function(req,res){
-    res.render("userstudy/prev");
-  });
+
 
   var calcData = {
     '포항 지진':{
