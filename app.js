@@ -34,7 +34,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 app.use('/script', express.static(__dirname + '/node_modules/'));
 app.use('/cytoData', express.static(__dirname + '/cytoData'));
-app.use('/mapData', express.static(__dirname + '/cytoData'));
 
 // use login session
 app.use(session({
