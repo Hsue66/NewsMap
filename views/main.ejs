@@ -1,3 +1,18 @@
+<%# /***********************************************************************
+  TopicMap : a Web application for people who want to generate and visualize news map.
+  Authors: Sumin Hong(hsue0606@gmail.com), U Kang (ukang@snu.ac.kr)
+  Data Mining Lab., Seoul National University
+
+This software is free of charge under research purposes.
+For commercial purposes, please contact the authors.
+
+-------------------------------------------------------------------------
+File: main.ejs
+ - A layout file for main page of TopicMap.
+
+Version: 1.0
+***********************************************************************/ %>
+
 <% include partial/header %>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 <link rel="stylesheet" href="/script/animate.css/animate.css">
@@ -10,24 +25,34 @@ new WOW().init();
 <% include partial/nav %>
 
 <div class="body_contents">
-
-
+  <%
+    var dataset = ["월드컵,축구","지진,포항","greece"];
+  %>
   <div class="m_search">
-      <div class="m_search_con wow bounceIn" >
-        <h1>NEWS MAP</h1>
-        <div class="m_subheading">
-          News map application
-        </div>
-        <div class="container">
-            <form class="input-group input-group-lg" action="/search" method="get">
-            <input type="text" class="form-control input-lg" name="sQuery" placeholder="Enter Keywords">
-            <span class="input-group-btn">
-              <button class="btn btn-search btn-lg" type="submit">make a News Map for Me!</button>
-            </span>
-        </div>
+    <div class="m_search_con wow bounceIn" >
+      <h1>TOPIC MAP</h1>
+      <div class="m_subheading">
+        generate and visualize news map
       </div>
+      <div class="form-group row">
+        <form action="/search" method="get">
+          <div class="col-sm-9">
+            <select class="form-control input-lg" name="sQuery">
+              <option value="" disabled selected>맵으로 보고싶은 키워드를 아래에서 선택하세요.</option>
+              <%
+                dataset.forEach(function(d){ %>
+                  <option value=<%=d%>> <%=d%></option>
+                <%});
+              %>
+            </select>
+          </div>
+          <div class="col-sm-3">
+            <button class="btn btn-search input-lg" type="submit">make a News Map for Me!</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
-
 
   <div class="container">
     <div class="m_intro">
@@ -77,7 +102,6 @@ new WOW().init();
           </div>
         </div>
       </div>
-
     </div>
   </div>
 

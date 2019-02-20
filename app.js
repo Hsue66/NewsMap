@@ -19,7 +19,6 @@ var mongoose = require('mongoose');
 var bodyParser = require("body-parser");
 var session = require('express-session');
 
-var News = require('./models/news');
 var Users = require('./models/user');
 var Datasets = require('./models/dataset');
 
@@ -35,6 +34,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 app.use('/script', express.static(__dirname + '/node_modules/'));
 app.use('/cytoData', express.static(__dirname + '/cytoData'));
+app.use('/mapData', express.static(__dirname + '/cytoData'));
 
 // use login session
 app.use(session({
@@ -47,7 +47,7 @@ app.use(session({
 app.set("view engine", "ejs");
 
 // import router
-var router = require("./router/main")(app,News,Users,Datasets);
+var router = require("./router/main")(app,Users,Datasets);
 
 // start server and listen for connentions
 app.listen(PORT, function(){
