@@ -1,13 +1,13 @@
 {
-  "name": "demoserver",
+  "name": "TopicMap",
   "version": "1.0.0",
-  "description": "demo server for cytoscape map",
+  "description": "a Web application for people who want to generate and visualize news map.",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Hsue66",
+  "author": "Sumin Hong",
   "license": "ISC",
   "dependencies": {
     "animate.css": "^3.7.0",

@@ -1,13 +1,26 @@
+/***********************************************************************
+  TopicMap : a Web application for people who want to generate and visualize news map.
+  Authors: Sumin Hong(hsue0606@gmail.com), U Kang (ukang@snu.ac.kr)
+  Data Mining Lab., Seoul National University
+
+This software is free of charge under research purposes.
+For commercial purposes, please contact the authors.
+
+-------------------------------------------------------------------------
+File: main.js
+ - A router file of TopicMap.
+
+Version: 1.0
+***********************************************************************/
+
 var fs = require("fs");
 var ObjectID = require('mongodb').ObjectID;
 const url = require('url');
-
 var multer = require('multer');
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'uploads/');
-  },
-  filename: function (req, file, cb) {
+  },filename: function (req, file, cb) {
     cb(null, file.fieldname + '.json');
   }
 });
