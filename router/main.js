@@ -413,32 +413,33 @@ module.exports = function(app,Users,Datasets){
     res.render("upload");
   });
 
+  /**
+   * Convert the uploaded files to a map and show redirect link 
+   *
+   * @return 'upload' page.
+   */
   var convert = require("./convert.js");
   var UploadFiles = upload.fields([{ name: 'dataset'}, { name: 'sample'}]);
-
   app.post('/upload',UploadFiles, function(req,res){
     convert.convert(fs);
     var output = `<a href="/demo">생성된 Map보기</a>`
     res.send(output);
   });
 
-  app.get("/upload2",function(req,res){
-    res.render("upload2");
-  });
-
-  var convert2 = require("./convert2.js");
-  var UploadFiles = upload.fields([{ name: 'dataset'}, { name: 'sample'}]);
-
-  app.post('/upload2',UploadFiles, function(req,res){
-    convert2.convert(fs);
-    var output = `<a href="/demo">생성된 Map보기</a>`
-    res.send(output);
-  });
-
+  /**
+   * Show demo page
+   *
+   * @return 'demo' page.
+   */
   app.get("/demo",function(req,res){
     res.render("demo");
   });
 
+  /**
+   * Show 404 page
+   *
+   * @return 'wrong' page.
+   */
   app.get("*",function(req,res){
     res.render("wrong");
   });
