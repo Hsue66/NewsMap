@@ -1,11 +1,27 @@
+<%# /***********************************************************************
+  TopicMap : a Web application for people who want to generate and visualize news map.
+  Authors: Sumin Hong(hsue0606@gmail.com), U Kang (ukang@snu.ac.kr)
+  Data Mining Lab., Seoul National University
+
+This software is free of charge under research purposes.
+For commercial purposes, please contact the authors.
+
+-------------------------------------------------------------------------
+File: demo.ejs
+ - A layout file for demo page of TopicMap.
+
+Version: 1.0
+***********************************************************************/ %>
+
 <% include partial/header %>
+<link rel="stylesheet" href="/css/search.css">
 <link rel="stylesheet" href="/css/demo.css">
 
 <% include partial/nav %>
   <div class="body_contents">
     <div class="search">
       <div class="search_con container" >
-          <h1>THIS IS NEWS MAP</h1>
+          <h1>TOPIC MAP</h1>
         </div>
       </div>
 
@@ -26,8 +42,8 @@
         <h4 id="date"></h4>
       </div>
       <p class="article-content text-center" id="contents">
-        키워드를 검색하신 후, 뉴스를 클릭하시면 기사를 살펴볼 수 있습니다
+        뉴스를 클릭하시면 기사를 살펴볼 수 있습니다
       </p>
     </div>
-    <script src="js/cytod.js"></script>
+    <script src="js/drawDemo.js"></script>
 <% include partial/footer %>

@@ -29,23 +29,30 @@ var upload = multer({ storage: storage });
 
 module.exports = function(app,Users,Datasets){
 
+  /**
+   * Show main page
+   *
+   * @return 'main' page.
+   */
   app.get("/",function(req,res){
     res.render("main");
   });
 
-  // main에서 dropdown list에서 선택 시,
+  /**
+   * Show search page
+   *
+   * @return 'search' page.
+   */
   app.get("/search",function(req,res){
     var sQuery = req.query.sQuery;
     res.render("search",{sQuery : sQuery});
   });
 
-/**
- * Show login page
- *
- * @param req
- *            req.query.err
- * @return 'userstudy/login' page.
- */
+  /**
+   * Show login page
+   *
+   * @return 'userstudy/login' page.
+   */
   app.get("/userstudy",function(req,res){
     var passed = req.query.err;
     // console.log(passed)
@@ -112,8 +119,8 @@ module.exports = function(app,Users,Datasets){
    * Save incoherent nodes or redundant nodes to session and Increase nowflag
    *
    * @return If you tested both maps on coherence and redundancy test, redirect to 'userstudy/eachMap'
-             If you tested first maps without redflag, redirect to 'userstudy/cohMap'
-             If you tested first maps with redflag, redirect to 'userstudy/redMap'
+             If you tested first map without redflag, redirect to 'userstudy/cohMap'
+             If you tested first map with redflag, redirect to 'userstudy/redMap'
    */
   app.post("/sendQ2",function(req,res){
     var sess = req.session;
@@ -141,16 +148,32 @@ module.exports = function(app,Users,Datasets){
     }
   });
 
+  /**
+   * Show cohMap page
+   *
+   * @return 'userstudy/cohMap' page.
+   */
   app.get("/userstudy/redMap",function(req,res){
     var sess = req.session;
     res.render("userstudy/cohMap",{topic:sess.topic,now:sess.nowflag,idx:sess.dataflag,dataset:sess.dataset[sess.dataflag],redflag:1});
   });
 
+  /**
+   * Show redTLMap page
+   *
+   * @return 'userstudy/redTLMap' page.
+   */
   app.get("/userstudy/redTLMap",function(req,res){
     var sess = req.session;
     res.render("userstudy/redTLMap",{topic:sess.topic,now:sess.nowflag,idx:sess.dataflag,dataset:sess.dataset[sess.dataflag]});
   });
 
+  /**
+   * Save redundant edges to session and Increase nowflag
+   *
+   * @return If you tested both maps, redirect to 'userstudy/eachMap'
+             If you tested first map, redirect to 'userstudy/redTLMap'
+   */
   app.post("/sendQ3",function(req,res){
     var sess = req.session;
 
@@ -162,14 +185,6 @@ module.exports = function(app,Users,Datasets){
       sess.Qd1[2] = req.body.topics;
       sess.Qd1num[2] = parseInt(req.body.topicsN);
     }
-    console.log("Q3")
-    console.log(req.body.topics)
-    console.log(req.body.topicsN)
-    console.log("------------------")
-    console.log(sess.Qd1)
-    console.log(sess.Qd1num)
-    console.log(sess.Qd2)
-    console.log(sess.Qd2num)
 
     if(sess.dataflag){
       sess.dataflag = 0;
@@ -179,57 +194,33 @@ module.exports = function(app,Users,Datasets){
       sess.dataflag = 1;
       res.redirect("/userstudy/redTLMap");
     }
-    // if(sess.conflag[sess.nowflag]){
-    //   if(sess.nowflag){
-    //     sess.Qd2[3] = '';
-    //     sess.Qd2num[3] = 0;
-    //   }
-    //   else {
-    //     sess.Qd1[3] = '';
-    //     sess.Qd1num[3] = 0;
-    //   }
-    //   sess.nowflag = sess.nowflag+1;
-    //   if(sess.nowflag === 2)
-    //     res.redirect("/userstudy/finish");
-    //   else
-    //     res.redirect("/userstudy/eachMap");
-    // }
-    // else
-    //   res.redirect("/userstudy/conMap");
   });
 
+  /**
+   * Show conMap page
+   *
+   * @return 'userstudy/conMap' page.
+   */
   app.get("/userstudy/conMap/",function(req,res){
     var sess = req.session;
     res.render("userstudy/conMap",{topic:sess.topic,con:sess.conflag[sess.dataflag],now:sess.nowflag,idx:sess.dataflag,dataset:sess.dataset[sess.dataflag]});
   });
 
+  /**
+   * Save wrong connected nodes to session and Increase nowflag
+   *
+   * @return If you tested both maps, redirect to 'userstudy/finish'
+             If you tested first map, redirect to 'userstudy/conMap'
+   */
   app.post("/sendQ4",function(req,res){
     var sess = req.session;
-
-    console.log("Q4")
-    console.log(req.body.Con_articles)
-    console.log(req.body.Con_articlesN)
-    console.log("------------------")
-
     if(sess.dataflag){
       sess.Qd2[3] = req.body.Con_articles;
       sess.Qd2num[3] = parseInt(req.body.Con_articlesN);
-      console.log(sess.Qd1)
-      console.log(sess.Qd1num)
-      console.log(sess.Qd2)
-      console.log(sess.Qd2num)
-      //sess.nowflag = sess.nowflag+1;
-      //res.redirect("/userstudy/finish")
     }
     else{
       sess.Qd1[3] = req.body.Con_articles;
       sess.Qd1num[3] = parseInt(req.body.Con_articlesN);
-      console.log(sess.Qd1)
-      console.log(sess.Qd1num)
-      console.log(sess.Qd2)
-      console.log(sess.Qd2num)
-      //sess.nowflag = sess.nowflag+1;
-      //res.redirect("/userstudy/eachMap")
     }
     if(sess.dataflag){
       sess.nowflag = sess.nowflag +1;
@@ -240,11 +231,15 @@ module.exports = function(app,Users,Datasets){
     }
   });
 
+  /**
+   * Show finish page and save session data to database
+   *
+   * @return 'userstudy/finish' page.
+   */
   app.get("/userstudy/finish",function(req,res){
     var sess = req.session;
-    console.log(sess);
+    // console.log(sess);
     if(sess.nowflag === 5){
-      console.log("save "+sess.userid);
       var updateV = {
         "bestMap": sess.Qd12,
         "eachMap": {
@@ -289,7 +284,6 @@ module.exports = function(app,Users,Datasets){
         }
       });
     }
-
     res.render("userstudy/finish");
   });
 
@@ -297,9 +291,6 @@ module.exports = function(app,Users,Datasets){
    * Log in with the user ID and show preview page if it is correct
    * and show alert if it is wrong or already participated.
    *
-   * @param req
-   *            req.body.id : User's login ID value
-   *            req.session : User's session
    * @return 'userstudy/prev' page or alert in userstudy/login page
    */
   app.post("/login",function(req,res){
@@ -331,7 +322,7 @@ module.exports = function(app,Users,Datasets){
   });
 
 
-
+  // data for calculate result
   var calcData = {
     '포항 지진':{
       'pohang1.json':{'incohA':0, 'recurA':0, 'recurT':0, 'connA':0, 'best':0, 'nodes':23, 'tls':5, 'cons':2 },
@@ -347,6 +338,11 @@ module.exports = function(app,Users,Datasets){
     }
   };
 
+  /**
+   * Show result page
+   *
+   * @return 'userstudy/result' page.
+   */
   app.get("/userstudy/result",function(req,res){
     for(var topic in calcData){
       for(var dataset in calcData[topic]){
@@ -354,11 +350,17 @@ module.exports = function(app,Users,Datasets){
         calcAll(topic, dataset);
       }
     }
-    console.log(calcData)
-
     res.render("userstudy/result",{data:calcData});
   });
 
+  /**
+   * Calculate how many people have selected a 'dId' map as a good map
+   *
+   * @param topic
+   *            topic
+   * @param dId
+   *            datasetId
+   */
   var calcBest = function(topic,dId){
     Users.countDocuments({"topic":topic,"bestMap":dId}, function(err, num){
       if(err)
@@ -366,8 +368,16 @@ module.exports = function(app,Users,Datasets){
       else
         calcData[topic][dId].best = num;
     });
-  }
+  };
 
+  /**
+   * Calculate  ratio of incohrence article, redundant article, redundant timeline and wrongly connected article.
+   *
+   * @param topic
+   *            topic
+   * @param dId
+   *            datasetId
+   */
   var calcAll = function(topic, dId){
     Datasets.aggregate([
       { $match: {
@@ -392,8 +402,13 @@ module.exports = function(app,Users,Datasets){
         calcData[topic][dId].connA = 1-(result[0].connA/(result[0].count*calcData[topic][dId].cons));
       }
     });
-  }
+  };
 
+  /**
+   * Show upload page
+   *
+   * @return 'upload' page.
+   */
   app.get("/upload",function(req,res){
     res.render("upload");
   });

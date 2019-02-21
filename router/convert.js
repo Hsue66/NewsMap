@@ -2,8 +2,36 @@
 
 var convert = function(fs){
   // read Dataset and result from each file
+  console.log("hihihihihi")
   var dataset = JSON.parse(fs.readFileSync('uploads/dataset.json', 'utf8'));
-  var result = JSON.parse(fs.readFileSync('uploads/sample.json', 'utf8'));
+  var Bresult = JSON.parse(fs.readFileSync('uploads/sample.json', 'utf8'));
+
+  var result = [];
+  for(var d in Bresult){
+    timeline = {};
+    var nodes = Bresult[d]["line"];
+    var clusters = Bresult[d]["clustering"];
+    var representation = Bresult[d]["representation"];
+    console.log(representation)
+    if(representation !== undefined){
+      line = [];
+      cluster = [];
+      for(var i =0; i<representation.length; i++){
+        if(representation[i] === 1){
+          line.push(nodes[i]);
+          cluster.push(clusters[i]);
+        }
+      }
+      timeline['line'] = line;
+      timeline['clustering'] = cluster;
+    }else{
+      timeline['line'] = nodes;
+      timeline['clustering'] = clusters;
+    }
+    result.push(timeline)
+  }
+  //print(result)
+
 
   var vis = [];         // 생성된 결과
   var topicIdx = 1;

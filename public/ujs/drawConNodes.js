@@ -7,46 +7,46 @@ This software is free of charge under research purposes.
 For commercial purposes, please contact the authors.
 
 -------------------------------------------------------------------------
-File: drawMapWcNodes.js
- - a Javascript file to draw Map which can select incoherent and redundant nodes
+File: drawConNodes.js
+ - a Javascript file to draw Map which can select connected nodes
 
 Version: 1.0
 ***********************************************************************/
 
 var dataset = document.getElementById('cy').getAttribute('value');
+document.getElementById('Con_articlesN').value = 0;
 
-document.getElementById('articlesN').value = 0;
 fetch('/cytoData/'+dataset,{mode:'no-cors'})
 .then(function(res){
   return res.json();
 })
 .then(function(elem){
   var cy = cytoscape({
-      container: document.getElementById('cy'),
-      pan: { x: 0, y: 0 },
-      zoom: 1,
-      minZoom: 0.9,
-      maxZoom: 5,
-      wheelSensitivity: 0.4,
-      style: styles,
-      elements: elem,
-      ready: function(){
-        var api = this.expandCollapse({
-          layoutBy: {
-            name: "preset",
-            animate: "end",
-            randomize: false,
-            fit: true
-          },
-          fisheye: false,
-          animate: false,
-          undoable: false
-        });
-        api.collapseAll();
-      },
-      layout: {
-        name: 'preset'
-      }
+    container: document.getElementById('cy'),
+    pan: { x: 0, y: 0 },
+    zoom: 1,
+    minZoom: 0.7,
+    maxZoom: 5,
+    wheelSensitivity: 0.4,
+    style: styles,
+    elements: elem,
+    ready: function(){
+      var api = this.expandCollapse({
+        layoutBy: {
+          name: "preset",
+          animate: "end",
+          randomize: false,
+          fit: true
+        },
+        fisheye: false,
+        animate: false,
+        undoable: false
+      });
+      api.collapseAll();
+    },
+    layout: {
+      name: 'preset'
+    }
   });
 
   // label html style로 만들기
@@ -122,47 +122,58 @@ fetch('/cytoData/'+dataset,{mode:'no-cors'})
     document.getElementById("contents").innerHTML = node.data("contents");
   });
 
-  var incohNodes = [];
-  var incohNIds = [];
+  var connNodes = [];
+  var connNIds = [];
   //우 클릭시 중복
   cy.on("cxttap","node", function(event){
     var node = event.target;
-    var nodename = node.data("name")
-    var nodeid = node.data("id")
-    if(incohNIds.includes(nodeid)){
-      var idx = incohNIds.indexOf(nodeid)
-      incohNodes.splice(idx,1);
-      incohNIds.splice(idx,1);
-      var str = '';
-      incohNodes.forEach(function(i){
-        str = str+i+"</br>";
-      });
-      document.getElementById('incoh').innerHTML = str;
-      document.getElementById('articles').value = incohNIds;
-      document.getElementById('articlesN').value = incohNIds.length;
-      node.style('background-color',"#b2b2b2")
+    var nodename = node.data("name");
+    var nodeid = node.data("id");
+    var nodetopics = node.data("topic");
+    //console.log(nodetopics)
+    if(nodetopics.length > 1){
+      if(connNodes.includes(nodename)){
+        var idx = connNodes.indexOf(nodename)
+        connNodes.splice(idx,1);
+        connNIds.splice(idx,1);
+        var str = '';
+        connNodes.forEach(function(i){
+          str = str+i+"</br>";
+        });
+        document.getElementById('conn').innerHTML= str;
+        document.getElementById('Con_articles').value = connNIds;
+        document.getElementById('Con_articlesN').value = connNIds.length;
+        node.style('background-color',"yellow")
+      }
+      else{
+        connNodes.push(nodename);
+        connNIds.push(nodeid);
+        var str = '';
+        connNodes.forEach(function(i){
+          str = str+i+"</br>";
+        });
+        document.getElementById('conn').innerHTML= str;
+        document.getElementById('Con_articles').value = connNIds;
+        document.getElementById('Con_articlesN').value = connNIds.length;
+        node.style('background-color',"red")
+      }
     }
-    else{
-      incohNodes.push(nodename);
-      incohNIds.push(nodeid);
-      var str = '';
-      incohNodes.forEach(function(i){
-        str = str+i+"</br>";
-      });
-      document.getElementById('incoh').innerHTML= str;
-      document.getElementById('articles').value = incohNIds;
-      document.getElementById('articlesN').value = incohNIds.length;
-      node.style('background-color',"#d32f2f")
-    }
-    // console.log(incohNodes)
-    // console.log(incohNIds)
   });
+
+  highlightconnNode(cy);
+  function highlightconnNode(t_cy){
+    t_cy.nodes().forEach(function(target){
+      if(target.data("topic").length >1)
+        target.style('background-color',"yellow");
+    });
+  }
 
   var api = cy.expandCollapse('get');
 
   var allTopics = {};
   var cidx = Math.floor(Math.random() * 19);
   highlightTimeline(cy);
+
 
   function highlightTimeline(t_cy){
     t_cy.edges().forEach(function(target){
@@ -176,4 +187,5 @@ fetch('/cytoData/'+dataset,{mode:'no-cors'})
       target.style('target-arrow-color', color);
     });
   }
+
 });

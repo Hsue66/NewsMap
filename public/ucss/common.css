@@ -1,3 +1,18 @@
+/***********************************************************************
+  TopicMap : a Web application for people who want to generate and visualize news map.
+  Authors: Sumin Hong(hsue0606@gmail.com), U Kang (ukang@snu.ac.kr)
+  Data Mining Lab., Seoul National University
+
+This software is free of charge under research purposes.
+For commercial purposes, please contact the authors.
+
+-------------------------------------------------------------------------
+File: common.js
+ - A CSS file for userstudy.
+
+Version: 1.0
+***********************************************************************/
+
 h1,h2 {
   font-family: 'Jeju Gothic', serif;
 }
@@ -15,7 +30,6 @@ h1,h2 {
   color: #1f3263;
   font-size: 16px;
   margin-bottom: 100px;
-  /* min-height: 350px; */
 }
 
 .important{

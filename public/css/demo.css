@@ -1,70 +1,23 @@
-.search{
-  background:url('/css/bg2.jpg') no-repeat center center;
-  background-size: cover;
-  display: table;
-  height: 150px;
-  width: 100%;
-  padding-left: 10%;
-  padding-right: 10%;
-}
+/***********************************************************************
+  TopicMap : a Web application for people who want to generate and visualize news map.
+  Authors: Sumin Hong(hsue0606@gmail.com), U Kang (ukang@snu.ac.kr)
+  Data Mining Lab., Seoul National University
 
-.search_con{
-  display: table-cell;
-  text-align: center;
-  vertical-align: middle;
-}
+This software is free of charge under research purposes.
+For commercial purposes, please contact the authors.
 
-h1{
-  color:white;
-  font-size: 38px;
-  text-shadow: 2px 2px 5px black;
-}
+-------------------------------------------------------------------------
+File: demo.css
+ - A CSS file for demo page.
 
-.btn-search{
-  background-color: #d8b17e;
-  color: white;
-  font-size:16px;
-}
+Version: 1.0
+***********************************************************************/
 
 .cy_con{
   height: 800px;
 }
 
-.ec_btn{
-  margin-bottom: 15px;
-  margin-top: 20px;
-}
-
 .cy{
   background-color: #edeff2;
   height: 700px;
-}
-
-h2{
-  color: #333333;
-}
-h4{
-  color: #8e8e9c;
-}
-/*
-blue
-  color: #1f3263;
-beige
-  color: #d8b17e;
-drak gray
-  color: #333333;
-gray
-  color: #737373;
-  */
-
-.title{
-  margin-bottom: 30px;
-  margin-top: 30px;
-}
-
-.article-content{
-  color: #1f3263;
-  font-size: 16px;
-  margin-bottom: 100px;
-  min-height: 350px;
 }
