@@ -8,16 +8,18 @@ For commercial purposes, please contact the authors.
 
 -------------------------------------------------------------------------
 File: convert.js
- - a Javascript file to convert the uploaded files to a map
+ - A supplementary file for controller.js.
+ - This converts the uploaded files to a map.
 
 Version: 1.0
 ***********************************************************************/
 
 /*jshint sub:true*/
+// Load the required modules that convert.js needs
+var fs = require("fs");
 
-var convert = function(fs){
-  // read Dataset and result from each file
-  console.log("hihihihihi")
+var convert = function(){
+  // read dataset and TopicMaps result from each file
   var dataset = JSON.parse(fs.readFileSync('uploads/dataset.json', 'utf8'));
   var Bresult = JSON.parse(fs.readFileSync('uploads/sample.json', 'utf8'));
 
@@ -27,7 +29,7 @@ var convert = function(fs){
     var nodes = Bresult[d]["line"];
     var clusters = Bresult[d]["clustering"];
     var representation = Bresult[d]["representation"];
-    console.log(representation)
+
     if(representation !== undefined){
       line = [];
       cluster = [];
@@ -43,18 +45,16 @@ var convert = function(fs){
       timeline['line'] = nodes;
       timeline['clustering'] = clusters;
     }
-    result.push(timeline)
+    result.push(timeline);
   }
-  //print(result)
 
-
-  var vis = [];         // 생성된 결과
+  var vis = [];         // final result will be saved on this variable
   var topicIdx = 1;
 
   var allNodes = [];
   var nodesNdates = {};
 
-  //edge data생성
+  // generate edge data
   for(var d in result){
     var nodes = result[d]["line"];
     var clusters = result[d]["clustering"];
@@ -76,7 +76,7 @@ var convert = function(fs){
     topicIdx = topicIdx+1;
   }
 
-  // node의 위치 지정
+  // set node position
   var sortable = [];
   for(var n in nodesNdates)
     sortable.push([n, nodesNdates[n]]);
@@ -87,9 +87,9 @@ var convert = function(fs){
     nodeNpos[n[0]] = x;
     x = x+ 150;
   });
-  console.log(nodeNpos);
+  // console.log(nodeNpos);
 
-  // node data생성
+  // generate node data
   y = 100;
   topicIdx = 0;
   already = [];
@@ -110,14 +110,13 @@ var convert = function(fs){
       temp.push(nodes[i]);
     }
     nodeByG.push(temp);
-    //console.log(nodeByG)
 
     y = y + 100;
     topicIdx = topicIdx+1;
     nodeByG.forEach(function(group){
       flag = 0;
       parent = "";
-      // group의 경우, node하나 복사 후 parent로 지정
+      // if more than one element, one node will be parent node
       if (group.length > 1){
         flag = 1;
         n = group[0];
@@ -176,7 +175,7 @@ var convert = function(fs){
     vis.push(nodeElems[key]);
   });
 
-  // result.json에 생성된 결과 저장
+  // save generated variable to result.json
   fs.writeFileSync("cytoData/result.json", JSON.stringify(vis), (err) => {
       if (err) {
           console.error(err);
