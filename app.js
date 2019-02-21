@@ -13,42 +13,43 @@ File: app.js
 Version: 1.0
 ***********************************************************************/
 
+// Load the required modules that server needs
 var express = require("express"),
     app = express();
 var mongoose = require('mongoose');
 var bodyParser = require("body-parser");
 var session = require('express-session');
 
-var Users = require('./models/user');
-var Datasets = require('./models/dataset');
-
+// Set port
 const PORT = process.env.PORT || 3000;
 
-// connect to mongoDB (heroku / local)
-//mongoose.connect(process.env.MONGODB_URI);
-mongoose.connect("mongodb://localhost/nc-news", { useNewUrlParser: true });
+// Connect to mongoDB (heroku / local)
+mongoose.connect(process.env.MONGODB_URI);
+//mongoose.connect("mongodb://localhost/nc-news", { useNewUrlParser: true });
 
-app.use(bodyParser.urlencoded({extended: true}));
-
-// include static file
+// Define the location of the template files
 app.use(express.static("public"));
 app.use('/script', express.static(__dirname + '/node_modules/'));
 app.use('/cytoData', express.static(__dirname + '/cytoData'));
 
-// use login session
+// Create a login session
 app.use(session({
     secret: '@#@$MYSIGN#@$#$',
     resave: false,
     saveUninitialized: true
 }));
 
-// set view engine as ejs
+// Set bodyParser
+app.use(bodyParser.urlencoded({extended: true}));
+
+// Set view engine as ejs
 app.set("view engine", "ejs");
 
-// import router
-var router = require("./router/main")(app,Users,Datasets);
+// Import router
+app.use('/', require('./router/index'));
 
-// start server and listen for connentions
+
+// Start server and listen for connentions
 app.listen(PORT, function(){
   console.log("TopicMap SERVER HAS STARTED!!!");
 });
