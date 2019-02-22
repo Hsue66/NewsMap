@@ -121,7 +121,7 @@ exports.cohMap = function(req,res){
 };
 
 /**
- * Save incoherent nodes or redundant nodes to session and Increase nowflag
+ * Save incoherent articles or redundant articles to session and Increase nowflag
  *
  * @return If you tested both maps on coherence and redundancy test, redirect to 'userstudy/eachMap'
            If you tested first map without redflag, redirect to 'userstudy/cohMap'
@@ -155,9 +155,9 @@ exports.sendQ2 = function(req,res){
 
 
 /**
- * Show cohMap page
+ * Show redMap page
  *
- * @return 'userstudy/cohMap' page.
+ * @return 'userstudy/redMap' page.
  */
 exports.redMap = function(req,res){
   var sess = req.session;
@@ -175,7 +175,7 @@ exports.redTLMap = function(req,res){
 };
 
 /**
- * Save redundant edges to session and Increase nowflag
+ * Save redundant timelines to session and Increase nowflag
  *
  * @return If you tested both maps, redirect to 'userstudy/eachMap'
            If you tested first map, redirect to 'userstudy/redTLMap'
@@ -214,7 +214,7 @@ exports.conMap = function(req,res){
 
 
 /**
- * Save wrong connected nodes to session and Increase nowflag
+ * Save the incorrectly linked articles to session and Increase nowflag
  *
  * @return If you tested both maps, redirect to 'userstudy/finish'
            If you tested first map, redirect to 'userstudy/conMap'
@@ -344,7 +344,7 @@ var calcBest = function(topic,dId){
 };
 
 /**
- * Calculate  ratio of incohrence article, redundant article, redundant timeline and wrongly connected article.
+ * Calculate the ratio of incohrence article, redundant article, redundant timeline and incorrectly connected article.
  *
  * @param topic
  *            topic

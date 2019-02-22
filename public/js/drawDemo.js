@@ -67,16 +67,6 @@ fetch('/cytoData/result.json',{mode:'no-cors'})
       }
   ]);
 
-  // 랜덤 색상 선정
-  function getRandomColor() {
-    var letters = '0123456789ABCDEF';
-    var color = '#';
-    for (var i = 0; i < 6; i++){
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-  }
-
   // edge색상 변경
   function sethighlightEdge(node){
     var nowList = node.data('topic');

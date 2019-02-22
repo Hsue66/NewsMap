@@ -8,7 +8,7 @@ For commercial purposes, please contact the authors.
 
 -------------------------------------------------------------------------
 File: user.js
- - a Database Schema for user
+ - a Database Schema for participant information in user study.
 
 Version: 1.0
 ***********************************************************************/

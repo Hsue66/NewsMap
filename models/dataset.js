@@ -8,7 +8,7 @@ For commercial purposes, please contact the authors.
 
 -------------------------------------------------------------------------
 File: dataset.js
- - a Database Schema for dataset
+ - a Database Schema to store participant response on user study.
 
 Version: 1.0
 ***********************************************************************/

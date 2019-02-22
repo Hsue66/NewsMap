@@ -8,7 +8,7 @@ For commercial purposes, please contact the authors.
 
 -------------------------------------------------------------------------
 File: draw.js
- - a Javascript file to draw selected Map from list
+ - a Javascript file to draw selected Map from searh page.
 
 Version: 1.0
 ***********************************************************************/
@@ -67,15 +67,6 @@ fetch('/cytoData/'+query+'Data.json',{mode:'no-cors'})
           }
       }
   ]);
-
-  // 랜덤 색상 선정
-  function getRandomColor() {
-    var letters = '0123456789ABCDEF';
-    var color = '#';
-    for (var i = 0; i < 6; i++){
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
   }
 
   // edge색상 변경
