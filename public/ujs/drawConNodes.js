@@ -8,7 +8,7 @@ For commercial purposes, please contact the authors.
 
 -------------------------------------------------------------------------
 File: drawConNodes.js
- - a Javascript file to draw Map which can select connected nodes
+ - A javascript file to draw Map which can a select connected nodes
 
 Version: 1.0
 ***********************************************************************/
@@ -16,11 +16,13 @@ Version: 1.0
 var dataset = document.getElementById('cy').getAttribute('value');
 document.getElementById('Con_articlesN').value = 0;
 
+// Read the result JSON file
 fetch('/cytoData/'+dataset,{mode:'no-cors'})
 .then(function(res){
   return res.json();
 })
 .then(function(elem){
+  // Set the default values for Cytoscape
   var cy = cytoscape({
     container: document.getElementById('cy'),
     pan: { x: 0, y: 0 },
@@ -49,7 +51,7 @@ fetch('/cytoData/'+dataset,{mode:'no-cors'})
     }
   });
 
-  // label html style로 만들기
+  // Customize the label of Cytoscape by nodeHtmlLabel
   cy.nodeHtmlLabel([
       {
           query: 'node',
@@ -69,52 +71,19 @@ fetch('/cytoData/'+dataset,{mode:'no-cors'})
       }
   ]);
 
-  // edge색상 변경
-  function sethighlightEdge(node){
-    var nowList = node.data('topic');
-    for(var now in nowList){
-      node.successors().each(
-        function(e){
-          if(e.isEdge() && e.data('topic').includes(nowList[now])){
-            var color = colorPreset[allTopics[e.data('topic')]];
-            e.style('line-color', color);
-            e.style('target-arrow-color', color);
-            }
-      });
-      node.predecessors().each(
-        function(e){
-          if(e.isEdge() && e.data('topic').includes(nowList[now])){
-            var color = colorPreset[allTopics[e.data('topic')]];
-            e.style('line-color', color);
-            e.style('target-arrow-color', color);
-            }
-      });
-    }
-  }
-
-  // edge색상 초기화
-  function removehighlightEdge(t_cy){
-    t_cy.edges().forEach(function(target){
-      var etopic = target.data('topic')[0];
-      var color = colorShade[allTopics[etopic]];
-      target.style('line-color', color);
-      target.style('target-arrow-color', color);
-    });
-  }
-
-  // mouse over시,  edge 색상변경
+  // mouse over,  change edge color
   cy.on('mouseover','node',function(event){
     var node = event.target;
     sethighlightEdge(node);
   });
 
-  // mouse out시, edge 원상태
+  // mouse out, return edge color
   cy.on('mouseout', 'node', function(event) {
     var node = event.target;
     removehighlightEdge(event.cy);
   });
 
-  // click시, article update
+  // click, update article data to HTML
   cy.on("click","node", function(event){
     var node = event.target;
     document.getElementById("title").innerHTML = node.data("name");
@@ -124,7 +93,8 @@ fetch('/cytoData/'+dataset,{mode:'no-cors'})
 
   var connNodes = [];
   var connNIds = [];
-  //우 클릭시 중복
+
+  // right-click, update incorrectly connected nodes
   cy.on("cxttap","node", function(event){
     var node = event.target;
     var nodename = node.data("name");
@@ -161,6 +131,13 @@ fetch('/cytoData/'+dataset,{mode:'no-cors'})
   });
 
   highlightconnNode(cy);
+
+  /**
+   * Display all the connected nodes to yellow.
+   *
+   * @param t_cy
+   *    the cy value
+   */
   function highlightconnNode(t_cy){
     t_cy.nodes().forEach(function(target){
       if(target.data("topic").length >1)
@@ -170,11 +147,59 @@ fetch('/cytoData/'+dataset,{mode:'no-cors'})
 
   var api = cy.expandCollapse('get');
 
+  /**
+   * Highlights edges with the same topic as the mouse was overlayed.
+   *
+   * @param node
+   *    a mouse overlayed node
+   */
+  function sethighlightEdge(node){
+    var nowList = node.data('topic');
+    for(var now in nowList){
+      node.successors().each(
+        function(e){
+          if(e.isEdge() && e.data('topic').includes(nowList[now])){
+            var color = colorPreset[allTopics[e.data('topic')]];
+            e.style('line-color', color);
+            e.style('target-arrow-color', color);
+            }
+      });
+      node.predecessors().each(
+        function(e){
+          if(e.isEdge() && e.data('topic').includes(nowList[now])){
+            var color = colorPreset[allTopics[e.data('topic')]];
+            e.style('line-color', color);
+            e.style('target-arrow-color', color);
+            }
+      });
+    }
+  }
+
+  /**
+   * Return the highlighted edge to its original color
+   *
+   * @param t_cy
+   *    an event that the mouse pointer leaves the node
+   */
+  function removehighlightEdge(t_cy){
+    t_cy.edges().forEach(function(target){
+      var etopic = target.data('topic')[0];
+      var color = colorShade[allTopics[etopic]];
+      target.style('line-color', color);
+      target.style('target-arrow-color', color);
+    });
+  }
+
   var allTopics = {};
   var cidx = Math.floor(Math.random() * 19);
   highlightTimeline(cy);
 
-
+  /**
+   * Displays all the timelines according to the color of the topic.
+   *
+   * @param t_cy
+   *    the cy value
+   */
   function highlightTimeline(t_cy){
     t_cy.edges().forEach(function(target){
       var etopic = target.data('topic')[0];

@@ -16,12 +16,12 @@ Version: 1.0
 var mongoose = require('mongoose');
 
 var datasetSchema = new mongoose.Schema({
-  userId: String,
-  datasetId: String,
-  incohA: Number,
-  recurA: Number,
-  recurT: Number,
-  connA : Number
+  userId: String,           // The ObjectId of participant in User collection
+  datasetId: String,        // The dataset Id
+  incohA: Number,           // The number of incoherent articles
+  recurA: Number,           // The number of redundant articles
+  recurT: Number,           // The number of redundant timelines
+  connA : Number            // The number of incorrectly linked articles
 });
 
 module.exports = mongoose.model("dataset",datasetSchema);

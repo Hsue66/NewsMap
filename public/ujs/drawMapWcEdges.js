@@ -16,11 +16,13 @@ Version: 1.0
 var dataset = document.getElementById('cy').getAttribute('value');
 document.getElementById('topicsN').value = 0;
 
+// Read the result JSON file
 fetch('/cytoData/'+dataset,{mode:'no-cors'})
 .then(function(res){
   return res.json();
 })
 .then(function(elem){
+  // Set the default values for Cytoscape
   var cy = cytoscape({
       container: document.getElementById('cy'),
       pan: { x: 0, y: 0 },
@@ -49,7 +51,7 @@ fetch('/cytoData/'+dataset,{mode:'no-cors'})
       }
   });
 
-  // label html style로 만들기
+  // Customize the label of Cytoscape by nodeHtmlLabel
   cy.nodeHtmlLabel([
       {
           query: 'node',
@@ -69,7 +71,59 @@ fetch('/cytoData/'+dataset,{mode:'no-cors'})
       }
   ]);
 
-  // edge색상 변경
+  var redTopics = []
+
+  // right-click, update redundant edges
+  cy.on('cxttap','edge',function(event){
+    var edge = event.target;
+    var pre =
+    '[id="'+edge.data("source")+'"]';
+    var topic = edge.data("topic")[0];
+
+    if(redTopics.includes(topic)){
+      var idx = redTopics.indexOf(topic)
+      redTopics.splice(idx,1);
+      document.getElementById('topics').value = redTopics;
+      document.getElementById('topicsN').value = redTopics.length;
+
+      removehighlightEdge(event.cy);
+    }
+    else{
+      redTopics.push(topic);
+      document.getElementById('topics').value = redTopics;
+      document.getElementById('topicsN').value = redTopics.length;
+      setRedunEdge(cy.nodes(pre),edge.data("topic")[0]);
+    }
+  });
+
+  // mouse over,  change edge color
+  cy.on('mouseover','node',function(event){
+    var node = event.target;
+    sethighlightEdge(node);
+  });
+
+  // mouse out, return edge color
+  cy.on('mouseout', 'node', function(event) {
+    var node = event.target;
+    removehighlightEdge(event.cy);
+  });
+
+  // click, update article data to HTML
+  cy.on("click","node", function(event){
+    var node = event.target;
+    document.getElementById("title").innerHTML = node.data("name");
+    document.getElementById("date").innerHTML = (node.data("date")).replace('T',' ');
+    document.getElementById("contents").innerHTML = node.data("contents");
+  });
+
+  var api = cy.expandCollapse('get');
+
+  /**
+   * Highlights edges with the same topic as the mouse was overlayed.
+   *
+   * @param node
+   *    a mouse overlayed node
+   */
   function sethighlightEdge(node){
     var nowList = node.data('topic');
     for(var now in nowList){
@@ -92,7 +146,12 @@ fetch('/cytoData/'+dataset,{mode:'no-cors'})
     }
   }
 
-  // edge색상 초기화
+  /**
+   * Return the highlighted edge to its original color
+   *
+   * @param t_cy
+   *    an event that the mouse pointer leaves the node
+   */
   function removehighlightEdge(t_cy){
     t_cy.edges().forEach(function(target){
       if(redTopics.includes(target.data("topic")[0])){
@@ -108,6 +167,14 @@ fetch('/cytoData/'+dataset,{mode:'no-cors'})
     });
   }
 
+  /**
+   * Return the highlighted edge to its original color
+   *
+   * @param node
+   *    One of the nodes in the timeline.
+   * @param topic
+   *    A topic value in the timeline
+   */
   function setRedunEdge(node,topic){
     color = "red";
     node.predecessors().each(
@@ -128,59 +195,16 @@ fetch('/cytoData/'+dataset,{mode:'no-cors'})
     });
   }
 
-  var redTopics = []
-  // edge click시,  edge 색상변경
-  cy.on('cxttap','edge',function(event){
-    var edge = event.target;
-    var pre =
-    '[id="'+edge.data("source")+'"]';
-    var topic = edge.data("topic")[0];
-
-    if(redTopics.includes(topic)){
-      var idx = redTopics.indexOf(topic)
-      redTopics.splice(idx,1);
-//      document.getElementById('redtl').innerHTML= redTopics;
-      document.getElementById('topics').value = redTopics;
-      document.getElementById('topicsN').value = redTopics.length;
-      //스타일 바꾸기
-      removehighlightEdge(event.cy);
-    }
-    else{
-      redTopics.push(topic);
-//      document.getElementById('redtl').innerHTML= redTopics;
-      document.getElementById('topics').value = redTopics;
-      document.getElementById('topicsN').value = redTopics.length;
-      setRedunEdge(cy.nodes(pre),edge.data("topic")[0]);
-    }
-  });
-
-  // mouse over시,  edge 색상변경
-  cy.on('mouseover','node',function(event){
-    var node = event.target;
-    sethighlightEdge(node);
-  });
-
-  // mouse out시, edge 원상태
-  cy.on('mouseout', 'node', function(event) {
-    var node = event.target;
-    removehighlightEdge(event.cy);
-  });
-
-
-  // click시, article update
-  cy.on("click","node", function(event){
-    var node = event.target;
-    document.getElementById("title").innerHTML = node.data("name");
-    document.getElementById("date").innerHTML = (node.data("date")).replace('T',' ');
-    document.getElementById("contents").innerHTML = node.data("contents");
-  });
-
-  var api = cy.expandCollapse('get');
-
   var allTopics = {};
   var cidx = Math.floor(Math.random() * 19);
   highlightTimeline(cy);
 
+  /**
+   * Displays all the timelines according to the color of the topic.
+   *
+   * @param t_cy
+   *    the cy value
+   */
   function highlightTimeline(t_cy){
     t_cy.edges().forEach(function(target){
       var etopic = target.data('topic')[0];

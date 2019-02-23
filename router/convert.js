@@ -18,6 +18,11 @@ Version: 1.0
 // Load the required modules that convert.js needs
 var fs = require("fs");
 
+/**
+ * Read two uploaded files, the datset.json and sample.json and Create a map
+ *
+ * @return the result.json file containing generated map
+ */
 var convert = function(){
   // read dataset and TopicMaps result from each file
   var dataset = JSON.parse(fs.readFileSync('uploads/dataset.json', 'utf8'));

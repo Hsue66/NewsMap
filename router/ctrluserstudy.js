@@ -13,6 +13,7 @@ File: ctrluserstudy.js
 Version: 1.0
 ***********************************************************************/
 
+// Load the required modules that the user study controller needs.
 var Users = require('../models/user');
 var Datasets = require('../models/dataset');
 var ObjectID = require('mongodb').ObjectID;
@@ -33,7 +34,11 @@ exports.main = function(req,res){
  * Log in with the user ID and show preview page if it is correct
  * and show alert if it is wrong or already participated.
  *
- * @return 'userstudy/prev' page or alert in userstudy/login page
+ * @param req.body.id
+ *    a user idea
+ * @param req.session
+ *    a user session
+ * @return 'userstudy/prev' page or alert in 'userstudy/login' page
  */
 exports.login = function(req,res){
   var username = req.body.id;
@@ -64,7 +69,7 @@ exports.login = function(req,res){
 };
 
 /**
- * Show preview page
+ * Show preview page.
  *
  * @return 'userstudy/prev' page.
  */
@@ -72,10 +77,12 @@ exports.prev = function(req,res){
   res.render("userstudy/prev");
 };
 
-
 /**
- * Show eachMap page
+ * Show eachMap page.
+ * Display eachMap according to the value of nowflag in user session.
  *
+ * @param req.session.nowflag
+ *    the nowflag in a user session.
  * @return 'userstudy/eachMap' page.
  */
 exports.eachMap = function(req,res){
@@ -84,7 +91,8 @@ exports.eachMap = function(req,res){
 };
 
 /**
- * Show bestMap page
+ * Show bestMap page.
+ * Show two map in the dataset and make participant to choose one of them.
  *
  * @return 'userstudy/bestMap' page.
  */
@@ -96,6 +104,12 @@ exports.bestMap = function(req,res){
 /**
  * Save selected map to session and Increase nowflag
  *
+ * @param req.body.map
+ *    the selected map by participant.
+ * @param req.session.dataset
+ *    the dataset in a user session.
+ * @param req.session.nowflag
+ *    the nowflag in a user session.
  * @return redirect to 'userstudy/eachMap' page.
  */
 exports.sendQ1 = function(req,res){
@@ -111,8 +125,17 @@ exports.sendQ1 = function(req,res){
 };
 
 /**
- * Show cohMap page
+ * Show cohMap page.
+ * Show a map corresponding to the dataset[dataflag] and Allow the participant to select the nodes by right-click.
  *
+ * @param req.session.topic
+ *    the topic in a user session.
+ * @param req.session.dataflag
+ *    the dataflag in a user session.
+ * @param req.session.dataset
+ *    the dataset in a user session.
+ * @param req.session.nowflag
+ *    the nowflag in a user session.
  * @return 'userstudy/cohMap' page.
  */
 exports.cohMap = function(req,res){
@@ -122,7 +145,17 @@ exports.cohMap = function(req,res){
 
 /**
  * Save incoherent articles or redundant articles to session and Increase nowflag
- *
+ * @param req.body.redflag
+ *    the redflag(0: select incoherent articles, 1: select redundant articles)
+ * @param req.body.articles
+ *    the list of selected articles by participant.
+ * @param req.body.articlesN
+ *    the number of selected articles by participant.
+ * @param req.session.dataflag
+ *    the dataflag in a user session.
+ * @param req.session.nowflag
+ *    the nowflag in a user session.
+ * @return 'userstudy/cohMap' page.
  * @return If you tested both maps on coherence and redundancy test, redirect to 'userstudy/eachMap'
            If you tested first map without redflag, redirect to 'userstudy/cohMap'
            If you tested first map with redflag, redirect to 'userstudy/redMap'
@@ -155,8 +188,17 @@ exports.sendQ2 = function(req,res){
 
 
 /**
- * Show redMap page
+ * Show redMap page.
+ * Show a map corresponding to the dataset[dataflag] and Allow the participant to select nodes by right-click
  *
+ * @param req.session.topic
+ *    the topic in a user session.
+ * @param req.session.dataflag
+ *    the dataflag in a user session.
+ * @param req.session.dataset
+ *    the dataset in a user session.
+ * @param req.session.nowflag
+ *    the nowflag in a user session.
  * @return 'userstudy/redMap' page.
  */
 exports.redMap = function(req,res){
@@ -165,8 +207,17 @@ exports.redMap = function(req,res){
 };
 
 /**
- * Show redTLMap page
+ * Show redTLMap page.
+ * Show a map corresponding to the dataset[dataflag] and Allows the participant to select timelines by right-click.
  *
+ * @param req.session.topic
+ *    the topic in a user session.
+ * @param req.session.dataflag
+ *    the dataflag in a user session.
+ * @param req.session.dataset
+ *    the dataset in a user session.
+ * @param req.session.nowflag
+ *    the nowflag in a user session.
  * @return 'userstudy/redTLMap' page.
  */
 exports.redTLMap = function(req,res){
@@ -177,6 +228,14 @@ exports.redTLMap = function(req,res){
 /**
  * Save redundant timelines to session and Increase nowflag
  *
+ * @param req.body.topics
+ *    the list of selected timelines by participant.
+ * @param req.body.topicsN
+ *    the number of selected timelines by participant.
+ * @param req.session.dataflag
+ *    the dataflag in a user session.
+ * @param req.session.nowflag
+ *    the nowflag in a user session.
  * @return If you tested both maps, redirect to 'userstudy/eachMap'
            If you tested first map, redirect to 'userstudy/redTLMap'
  */
@@ -203,8 +262,19 @@ exports.sendQ3 = function(req,res){
 };
 
 /**
- * Show conMap page
+ * Show conMap page.
+ * Show a map corresponding to the dataset[dataflag] and Allows the participant to select nodes that are not properly linked by right-click
  *
+ * @param req.session.topic
+ *    the topic in a user session.
+ * @param req.session.conflag
+ *    the conflag in a user session.
+ * @param req.session.dataflag
+ *    the dataflag in a user session.
+ * @param req.session.dataset
+ *    the dataset in a user session.
+ * @param req.session.nowflag
+ *    the nowflag in a user session.
  * @return 'userstudy/conMap' page.
  */
 exports.conMap = function(req,res){
@@ -216,6 +286,14 @@ exports.conMap = function(req,res){
 /**
  * Save the incorrectly linked articles to session and Increase nowflag
  *
+ * @param req.body.Con_articles
+ *    the list of selected articles by participant.
+ * @param req.body.Con_articlesN
+ *    the number of selected articles by participant.
+ * @param req.session.dataflag
+ *    the dataflag in a user session.
+ * @param req.session.nowflag
+ *    the nowflag in a user session.
  * @return If you tested both maps, redirect to 'userstudy/finish'
            If you tested first map, redirect to 'userstudy/conMap'
  */
@@ -241,6 +319,10 @@ exports.sendQ4 = function(req,res){
 /**
  * Show finish page and save session data to database
  *
+ * @param req.session
+ *    a user session that stores the participant's response.
+ * @param req.session.nowflag
+ *    the nowflag in a user session.
  * @return 'userstudy/finish' page.
  */
 exports.finish = function(req,res){
@@ -330,9 +412,9 @@ var calcData = {
  * Calculate how many people have selected a 'dId' map as a good map
  *
  * @param topic
- *            topic
+ *    the topic of calcData.
  * @param dId
- *            datasetId
+ *    the dataset Id of calcData.
  */
 var calcBest = function(topic,dId){
   Users.countDocuments({"topic":topic,"bestMap":dId}, function(err, num){
@@ -347,9 +429,9 @@ var calcBest = function(topic,dId){
  * Calculate the ratio of incohrence article, redundant article, redundant timeline and incorrectly connected article.
  *
  * @param topic
- *            topic
+ *    the topic of calcData.
  * @param dId
- *            datasetId
+ *    the dataset Id of calcData.
  */
 var calcAll = function(topic, dId){
   Datasets.aggregate([

@@ -8,18 +8,20 @@ For commercial purposes, please contact the authors.
 
 -------------------------------------------------------------------------
 File: drawMapB.js
- - a Javascript file to draw map B
+ - A javascript file for drawing map B from the bestMap page.
 
 Version: 1.0
 ***********************************************************************/
 
 var dataset = document.getElementById('datadiv1').getAttribute('value');
 
+// Read the selected JSON file
 fetch('/cytoData/'+dataset,{mode:'no-cors'})
 .then(function(res){
   return res.json();
 })
 .then(function(elem){
+  // Set the default values for Cytoscape
   var cy = cytoscape({
     container: document.getElementById('cy1'),
     pan: { x: 0, y: 0 },
@@ -48,7 +50,7 @@ fetch('/cytoData/'+dataset,{mode:'no-cors'})
     }
   });
 
-  // label style
+  // Customize the label of Cytoscape by nodeHtmlLabel
   cy.nodeHtmlLabel([
       {
           query: 'node',
@@ -68,7 +70,34 @@ fetch('/cytoData/'+dataset,{mode:'no-cors'})
       }
   ]);
 
-  // change edge color
+  // mouse over,  change edge color
+  cy.on('mouseover','node',function(event){
+    var node = event.target;
+    sethighlightEdge(node);
+  });
+
+  // mouse out, return edge color
+  cy.on('mouseout', 'node', function(event) {
+    var node = event.target;
+    removehighlightEdge(event.cy);
+  });
+
+  // click, update article data to HTML
+  cy.on("click","node", function(event){
+    var node = event.target;
+    document.getElementById("title1").innerHTML = node.data("name");
+    document.getElementById("date1").innerHTML = (node.data("date")).replace('T',' ');
+    document.getElementById("contents1").innerHTML = node.data("contents");
+  });
+
+  var api = cy.expandCollapse('get');
+
+  /**
+   * Highlights edges with the same topic as the mouse was overlayed.
+   *
+   * @param node
+   *    a mouse overlayed node
+   */
   function sethighlightEdge(node){
     var nowList = node.data('topic');
     for(var now in nowList){
@@ -91,7 +120,12 @@ fetch('/cytoData/'+dataset,{mode:'no-cors'})
     }
   }
 
-  // initialize edge color
+  /**
+   * Return the highlighted edge to its original color
+   *
+   * @param t_cy
+   *    an event that the mouse pointer leaves the node
+   */
   function removehighlightEdge(t_cy){
     t_cy.edges().forEach(function(target){
       var etopic = target.data('topic')[0];
@@ -101,33 +135,16 @@ fetch('/cytoData/'+dataset,{mode:'no-cors'})
     });
   }
 
-  // mouse over시,  edge 색상변경
-  cy.on('mouseover','node',function(event){
-    var node = event.target;
-    sethighlightEdge(node);
-  });
-
-  // mouse out시, edge 원상태
-  cy.on('mouseout', 'node', function(event) {
-    var node = event.target;
-    removehighlightEdge(event.cy);
-  });
-
-  // click시, article update
-  cy.on("click","node", function(event){
-    var node = event.target;
-    document.getElementById("title1").innerHTML = node.data("name");
-    document.getElementById("date1").innerHTML = (node.data("date")).replace('T',' ');
-    document.getElementById("contents1").innerHTML = node.data("contents");
-  });
-
-  var api = cy.expandCollapse('get');
-
   var allTopics = {};
   var cidx = Math.floor(Math.random() * 19);
   highlightTimeline(cy);
 
-
+  /**
+   * Displays all the timelines according to the color of the topic.
+   *
+   * @param t_cy
+   *    the cy value
+   */
   function highlightTimeline(t_cy){
     t_cy.edges().forEach(function(target){
       var etopic = target.data('topic')[0];

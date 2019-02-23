@@ -28,6 +28,8 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage });
 
 
+// Specifies a handler for http requests coming in from a specific URL.
+
 /**
  * Show main page
  */
@@ -46,7 +48,6 @@ router.get("/upload",controller.upload);
 /**
  * Convert the uploaded files to a map and show redirect link
  */
-
 var UploadFiles = upload.fields([{ name: 'dataset'}, { name: 'sample'}]);
 router.post('/upload',UploadFiles,controller.uploadAndConvert);
 

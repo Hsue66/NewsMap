@@ -8,7 +8,7 @@ For commercial purposes, please contact the authors.
 
 -------------------------------------------------------------------------
 File: controller.js
- - A control module associated with main API at index.js
+ - A control module associated with the main API at index.js
 
 Version: 1.0
 ***********************************************************************/
@@ -27,7 +27,8 @@ exports.main = function(req,res){
 
 /**
  * Show search page
- *
+ * @param req.query.sQuery
+ *          a user-selected search query
  * @return 'search' page.
  */
 exports.search = function(req,res){

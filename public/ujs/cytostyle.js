@@ -13,6 +13,7 @@ File: cytostyle.js
 Version: 1.0
 ***********************************************************************/
 
+//Set style of Cytoscape
 var styles = [
   {
     "selector": "node",
@@ -69,11 +70,13 @@ var styles = [
   }
 ];
 
+// Set default color to topic Id
 var colorPreset = ["#ff3333","#ff5733","#ff8a33","#ffbd33","#fff033",
 "#dbff33","#a8ff33","#33ff94","#33f3ff","#33c0ff",
 "#338dff","#335aff","#3f33ff","#7233ff","#a533ff",
 "#d833ff","#ff33f3","#ff33c0","#ff338d"];
 
+// Set highlight colr to topic Id
 var colorShade = ["#b22323","#CF664F","#CF854F","#CFA74F","#CFC84F",
 "#B8CF4F","#99CF4F","#23b267","#4FCFCF","#2899cc",
 "#3e6385","#4052a5","#49528b","#7855B4","#5a336c",

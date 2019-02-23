@@ -8,18 +8,20 @@ For commercial purposes, please contact the authors.
 
 -------------------------------------------------------------------------
 File: draw.js
- - a Javascript file to draw selected Map from searh page.
+ - A javascript file for drawing the selected map from search page.
 
 Version: 1.0
 ***********************************************************************/
 var query = document.getElementById('inputQuery').value;
 
+// Read the selected JSON file
 console.log('/cytoData/'+query+'Data.json');
 fetch('/cytoData/'+query+'Data.json',{mode:'no-cors'})
 .then(function(res){
   return res.json();
 })
 .then(function(elem){
+  // Set the default values for Cytoscape
   var cy = cytoscape({
       container: document.getElementById('cy'),
       pan: { x: 0, y: 0 },
@@ -48,7 +50,7 @@ fetch('/cytoData/'+query+'Data.json',{mode:'no-cors'})
       }
   });
 
-  // label html style로 만들기
+  // Customize the label of Cytoscape by nodeHtmlLabel
   cy.nodeHtmlLabel([
       {
           query: 'node',
@@ -69,7 +71,46 @@ fetch('/cytoData/'+query+'Data.json',{mode:'no-cors'})
   ]);
   }
 
-  // edge색상 변경
+  // mouse over,  change edge color
+  cy.on('mouseover','node',function(event){
+    var node = event.target;
+    sethighlightEdge(node);
+  });
+
+  // mouse out, return edge color
+  cy.on('mouseout', 'node', function(event) {
+    var node = event.target;
+    removehighlightEdge(event.cy);
+  });
+
+  // click, update article data to HTML
+  cy.on("click","node", function(event){
+    var node = event.target;
+    document.getElementById("title").innerHTML = node.data("name");
+    document.getElementById("date").innerHTML = (node.data("date")).replace('T',' ');
+    document.getElementById("contents").innerHTML = node.data("contents");
+  });
+
+  var api = cy.expandCollapse('get');
+
+  // click expandAll button, expand nodes and highlight timelines
+  document.getElementById("expandAll").addEventListener("click", function () {
+    api.expandAll();
+    highlightTimeline(cy);
+  });
+
+  // click collapseAll button, collapse nodes and highlight timelines
+  document.getElementById("collapseAll").addEventListener("click", function () {
+    api.collapseAll();
+    highlightTimeline(cy);
+  });
+
+  /**
+   * Highlights edges with the same topic as the mouse was overlayed.
+   *
+   * @param node
+   *    a mouse overlayed node
+   */
   function sethighlightEdge(node){
     var nowList = node.data('topic');
     for(var now in nowList){
@@ -92,7 +133,12 @@ fetch('/cytoData/'+query+'Data.json',{mode:'no-cors'})
     }
   }
 
-  // edge색상 초기화
+  /**
+   * Return the highlighted edge to its original color
+   *
+   * @param t_cy
+   *    an event that the mouse pointer leaves the node
+   */
   function removehighlightEdge(t_cy){
     t_cy.edges().forEach(function(target){
       var etopic = target.data('topic')[0];
@@ -102,42 +148,16 @@ fetch('/cytoData/'+query+'Data.json',{mode:'no-cors'})
     });
   }
 
-  // mouse over시,  edge 색상변경
-  cy.on('mouseover','node',function(event){
-    var node = event.target;
-    sethighlightEdge(node);
-  });
-
-  // mouse out시, edge 원상태
-  cy.on('mouseout', 'node', function(event) {
-    var node = event.target;
-    removehighlightEdge(event.cy);
-  });
-
-  // click시, article update
-  cy.on("click","node", function(event){
-    var node = event.target;
-    document.getElementById("title").innerHTML = node.data("name");
-    document.getElementById("date").innerHTML = (node.data("date")).replace('T',' ');
-    document.getElementById("contents").innerHTML = node.data("contents");
-  });
-
-  var api = cy.expandCollapse('get');
-
-  document.getElementById("expandAll").addEventListener("click", function () {
-    api.expandAll();
-    highlightTimeline(cy);
-  });
-
-  document.getElementById("collapseAll").addEventListener("click", function () {
-    api.collapseAll();
-    highlightTimeline(cy);
-  });
-
   var allTopics = {};
   var cidx = Math.floor(Math.random() * 19);
   highlightTimeline(cy);
 
+  /**
+   * Displays all the timelines according to the color of the topic.
+   *
+   * @param t_cy
+   *    the cy value
+   */
   function highlightTimeline(t_cy){
     t_cy.edges().forEach(function(target){
       var etopic = target.data('topic')[0];
