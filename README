@@ -21,7 +21,7 @@ The Main page provides a brief introduction to this service. In the Search page,
 
 2. How to use TopicMap
 
-Connect to 'datalab.snu.ac.kr/topicmap' from chrome or firefox.
+Connect to 'datalab.snu.ac.kr/topicmap' or 'datalab.snu.ac.kr:8443' from chrome or firefox.
 - Main page : This page briefly describes what TopicMap is. You can check pre-generated maps by selecting from a list of search terms.
 - Search page : On this page, You can see the TopicMap at a glance. You can click on the nodes to view the article content and zoom in and out by clicking on the cluster nodes.
 - SampleTest page : You can directly upload the dataset file and the TopicMaps result file and can see the map created from the uploaded files.
